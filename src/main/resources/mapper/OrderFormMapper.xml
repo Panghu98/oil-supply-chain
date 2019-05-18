@@ -61,39 +61,43 @@
     <!--                                                                                                            -->
 
     <select id="selectApplyForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO"  resultMap="HistoryOrderMap">
-        select id, batch_number, `date`, `from`, `to`,`status`
-        from tb_order
-        where `from` = #{id,jdbcType=VARCHAR}
-        and `type` = '1' order by `date` desc
+        select a.id as id, a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`,c.`username` as `to`,`status`
+        from tb_order a inner join `user` b on a.`from` = b.id
+        inner join `user` c on a.`to` = c.id
+        where a.`from` = #{id,jdbcType=VARCHAR}
+        and a.`type` = '1' order by `date` desc
     </select>
     <select id="selectSendForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
-        select id, batch_number, `date`, `from`, `to`
-        from tb_order
-        where `to` = #{id,jdbcType=VARCHAR}
-          and `type` = '2' order by `date` desc
+        select a.id as id, a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`,c.`username` as `to`,`status`
+        from tb_order a inner join `user` b on a.`from` = b.id
+                        inner join `user` c on a.`to` = c.id
+        where a.`from` = #{id,jdbcType=VARCHAR}
+          and a.`type` = '2' order by `date` desc
     </select>
     <select id="selectTransApplyForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
-        select id, batch_number, `date`, `from`, `to`
-        from tb_order
-        where `from` = #{id,jdbcType=VARCHAR}
-          and `type` = '3' order by `date` desc
+        select a.id as id, a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`,c.`username` as `to`,`status`
+        from tb_order a inner join `user` b on a.`from` = b.id
+                        inner join `trans_company` c on a.`to` = c.id
+        where a.`from` = #{id,jdbcType=VARCHAR}
+          and a.`type` = '3' order by `date` desc
     </select>
     <select id="selectTransForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
-        select id, batch_number, `date`, `from`, `to`
-        from tb_order
-        where `from` = #{id,jdbcType=VARCHAR}
-          and `type` = '4' order by `date` desc
+        select a.id as id, a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`,c.`username` as `to`,`status`
+        from tb_order a inner join `trans_company` b on a.`from` = b.id
+                        inner join `user` c on a.`to` = c.id
+        where a.`from` = #{id,jdbcType=VARCHAR}
+          and a.`type` = '4' order by `date` desc
     </select>
     <select id="selectReceiveForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
-        select id, batch_number, `date`, `from`, `to`
-        from tb_order
-        where `from` = #{id,jdbcType=VARCHAR}
+        select a.id as id,a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`, a.`to` as `to`
+        from tb_order a inner join `user` b on a.`from` = b.id
+        where a.`from` = #{id,jdbcType=VARCHAR}
           and `type` = '5' order by `date` desc
     </select>
     <select id="selectSellForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
-        select id, batch_number, `date`, `from`, `to`
-        from tb_order
-        where `from` = #{id,jdbcType=VARCHAR}
+        select a.id as id,a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`, a.`to` as `to`
+        from tb_order a inner join `user` b on a.`from` = b.id
+        where a.`from` = #{id,jdbcType=VARCHAR}
           and `type` = '6' order by `date` desc
     </select>
 

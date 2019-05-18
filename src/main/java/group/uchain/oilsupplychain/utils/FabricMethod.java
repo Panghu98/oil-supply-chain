@@ -410,7 +410,7 @@ public class FabricMethod {
     private static JSONObject getJsonObject(JSONObject jsonObject) {
         String status = Objects.requireNonNull(jsonObject).getString("status");
         JSONObject returnJsonObject = new JSONObject();
-        if (status.equals(SUCCESS)){
+        if (status.equals(SUCCESS)||status.equals("201")){
             returnJsonObject.put("data",jsonObject.getJSONObject("payload"));
         }else {
             String message = String.valueOf(jsonObject.getString("error"));

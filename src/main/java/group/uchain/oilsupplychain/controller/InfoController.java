@@ -65,42 +65,42 @@ public class InfoController {
     @ApiOperation(value = "获取所有历史申请单")
     @RoleRequired(RoleEnum.STATION_AND_DEPOT)
     @GetMapping("/selectApplyForms")
-    public List<OrdersVO> selectApplyForms(){
+    public Result selectApplyForms(){
         return infoService.selectApplyForms();
     }
 
     @ApiOperation(value = "获取所有历史发油单")
     @RoleRequired(RoleEnum.DEOPT_AND_REFINERY)
     @GetMapping("/selectSendForms")
-    public List<OrdersVO> selectSendForms(){
+    public Result<List<OrdersVO>> selectSendForms(){
         return infoService.selectSendForms();
     }
 
     @ApiOperation(value = "获取所有历史运输申请单")
     @RoleRequired(RoleEnum.DEOPT_AND_REFINERY)
     @GetMapping("/selectTransApplyForms")
-    public List<OrdersVO> selectTransApplyForms(){
+    public Result<List<OrdersVO>> selectTransApplyForms(){
         return infoService.selectTransApplyForms();
     }
 
     @ApiOperation(value = "获取所有历史运输单")
-    @RoleRequired(RoleEnum.PETROL_STATION)
+    @RoleRequired(RoleEnum.TRANSPORTATION_COMPANY)
     @GetMapping("/selectTransForms")
-    public List<OrdersVO> selectTransForms(){
+    public Result<List<OrdersVO>> selectTransForms(){
         return infoService.selectTransForms();
     }
 
     @ApiOperation(value = "获取所有历史收油单")
     @RoleRequired(RoleEnum.STATION_AND_DEPOT)
     @GetMapping("/getReceiveForms")
-    public List<OrdersVO> getReceiveForms(){
+    public Result<List<OrdersVO>> getReceiveForms(){
         return infoService.selectReceiveForms();
     }
 
     @ApiOperation(value = "获取所有历史销售单")
     @RoleRequired(RoleEnum.PETROL_STATION)
     @GetMapping("/selectSellForms")
-    public List<OrdersVO> selectSellForms(){
+    public Result<List<OrdersVO>> selectSellForms(){
         return infoService.selectSellForms();
     }
 

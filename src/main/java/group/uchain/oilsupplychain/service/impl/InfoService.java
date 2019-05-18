@@ -71,7 +71,6 @@ public class InfoService {
     public void saveSendForm(ChainSendDTO chainSendDTO, String id){
         OrderForm form = new OrderForm();
         form.setId(id);
-        form.setStatus("1");
         form.setDate(format.format(new Date()));
         form.setBatchNumber(chainSendDTO.getBatchNumber());
         form.setFrom(chainSendDTO.getSender());
@@ -132,30 +131,36 @@ public class InfoService {
 
     /**
      * 获取历史订单
+     * @return
      */
-    public List<OrdersVO> selectSendForms() {
-        return orderFormMapper.selectSendForms(userService.getCurrentUser().getId());
+    public Result<List<OrdersVO>> selectSendForms() {
+        List<OrdersVO> list = orderFormMapper.selectSendForms(userService.getCurrentUser().getId());
+        return Result.successData(list);
     }
 
-    public List<OrdersVO> selectTransApplyForms() {
-
-        return orderFormMapper.selectTransApplyForms(userService.getCurrentUser().getId());
+    public Result<List<OrdersVO>> selectTransApplyForms() {
+        List<OrdersVO> list = orderFormMapper.selectTransApplyForms(userService.getCurrentUser().getId());
+        return Result.successData(list);
     }
 
-    public List<OrdersVO> selectReceiveForms() {
-        return orderFormMapper.selectReceiveForms(userService.getCurrentUser().getId());
+    public Result<List<OrdersVO>> selectReceiveForms() {
+        List<OrdersVO> list =  orderFormMapper.selectReceiveForms(userService.getCurrentUser().getId());
+        return Result.successData(list);
     }
 
-    public List<OrdersVO> selectTransForms() {
-        return orderFormMapper.selectTransForms(userService.getCurrentUser().getId());
+    public Result<List<OrdersVO>> selectTransForms() {
+        List<OrdersVO> list  = orderFormMapper.selectTransForms(userService.getCurrentUser().getId());
+        return Result.successData(list);
     }
 
-    public List<OrdersVO> selectSellForms() {
-        return orderFormMapper.selectSellForms(userService.getCurrentUser().getId());
+    public Result<List<OrdersVO>> selectSellForms() {
+        List<OrdersVO> list = orderFormMapper.selectSellForms(userService.getCurrentUser().getId());
+        return Result.successData(list);
     }
 
-    public List<OrdersVO> selectApplyForms() {
-        return orderFormMapper.selectApplyForms(userService.getCurrentUser().getId());
+    public Result selectApplyForms() {
+        List<OrdersVO> list =  orderFormMapper.selectApplyForms(userService.getCurrentUser().getId());
+        return Result.successData(list);
     }
 
 

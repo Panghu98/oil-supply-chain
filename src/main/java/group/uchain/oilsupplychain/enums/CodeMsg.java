@@ -20,7 +20,8 @@ public enum CodeMsg {
     USER_ALREADY_EXIST(501,"用户已存在"),
     OIlORDER_ALREADY_EXIST(502,"订单已存在"),
     OIlORDER_NOT_EXIST(503,"订单不存在" ),
-    BEEN_CHECKED(504,"订单已经审核");
+    BEEN_CHECKED(504,"订单已经审核"),
+    DATABASE_ERROR(505,"数据库异常");
 
 
     private Integer code;
