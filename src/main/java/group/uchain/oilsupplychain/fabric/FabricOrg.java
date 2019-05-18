@@ -20,7 +20,8 @@ import java.util.*;
  * 联盟组织对象
  *
  */
-class FabricOrg {
+class
+FabricOrg {
 
     private static Logger log = Logger.getLogger(FabricConfig.class);
 
