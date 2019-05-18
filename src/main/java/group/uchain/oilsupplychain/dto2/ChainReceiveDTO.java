@@ -1,0 +1,45 @@
+package group.uchain.oilsupplychain.dto2;
+
+import group.uchain.oilsupplychain.dto.ReceiveDTO;
+import group.uchain.oilsupplychain.service.UserService;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+ * @author panghu
+ * @Title: ReceiveDTO
+ * @ProjectName oil-supply-chain
+ * @Description: TODO
+ * @date 19-4-3 下午7:15
+ */
+@Data
+public class ChainReceiveDTO {
+
+
+    @Autowired
+    private UserService userService;
+
+    private String count;
+
+    /**
+     * 抽样检测结果
+     */
+    private String sampleStatus;
+
+    private String certification;
+
+    private String variety;
+
+    private String senderID;
+
+    private String batchNumber;
+
+    public ChainReceiveDTO(ReceiveDTO receiveDTO,String batchNumber) {
+        this.certification = receiveDTO.getCertification();
+        this.sampleStatus = receiveDTO.getSampleStatus();
+        this.variety = receiveDTO.getVariety();
+        this.senderID = receiveDTO.getSender();
+        this.count = receiveDTO.getCount();
+        this.batchNumber = batchNumber;
+    }
+}

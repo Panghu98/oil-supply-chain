@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.uchain.oilsupplychain.mapper.UserFormMapper">
+<!--  <insert id="insert" parameterType="group.uchain.oilsupplychain.form.UserForm">-->
+<!--    &lt;!&ndash;注意这里的order要设置为AFTER&ndash;&gt;-->
+<!--    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">-->
+<!--      SELECT LAST_INSERT_ID()-->
+<!--    </selectKey>-->
+<!--    insert into tb_user (id, username, `password`, -->
+<!--      email, phone, `role`, -->
+<!--      description)-->
+<!--    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},-->
+<!--      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, -->
+<!--      #{description,jdbcType=VARCHAR})-->
+<!--  </insert>-->
+    <!--改需求了-->
+    <select id="selectByUsername" resultType="group.uchain.oilsupplychain.dto.User">
+       select username,id,`role`,password from user where username = #{username,jdbcType=VARCHAR}
+       union select username,id,`role`,password from trans_company where username = #{username,jdbcType=VARCHAR};
+    </select>
+    <select id="getUsernameById" resultType="java.lang.String">
+        select username from user where id = #{id,jdbcType=INTEGER}
+        union
+        select username from trans_company where `id` = #{id,jdbcType=INTEGER}
+    </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="group.uchain.oilsupplychain.mapper.UtilMapper" >
+    <insert id="addCount">
+        insert tb_email (email,status)  values  (#{email,jdbcType=VARCHAR},'1')
+    </insert>
+    <update id="updateCheckCode">
+        update tb_email
+        set   check_code=#{checkCode,jdbcType=VARCHAR}
+        where  email = #{email,jdbcType=VARCHAR}
+    </update>
+    <update id="updateEmailStatus">
+        update tb_email
+        set status = '0'
+        where tb_email.email = #{email,jdbcType=VARCHAR};
+    </update>
+    <select id="checkEmailStatus" resultType="java.lang.String">
+        select `status`
+        from tb_email
+        where email = #{email,jdbcType=VARCHAR}
+    </select>
+    <select id="getCheckCode" resultType="java.lang.String">
+        select check_code
+        from tb_email
+        where email = #{email,jdbcType=VARCHAR}
+    </select>
+</mapper>

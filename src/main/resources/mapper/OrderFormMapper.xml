@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.uchain.oilsupplychain.mapper.OrderFormMapper">
+  <resultMap id="BaseResultMap" type="group.uchain.oilsupplychain.form.OrderForm">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="batch_number" jdbcType="VARCHAR" property="batchNumber" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="from" jdbcType="VARCHAR" property="from" />
+    <result column="to" jdbcType="VARCHAR" property="to" />
+    <result column="type" jdbcType="VARCHAR" property="type"/>
+      <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+
+  <resultMap id="ApplyOrderMap" type="group.uchain.oilsupplychain.vo.ApplyOrdersVO">
+      <id column="id" jdbcType="VARCHAR" property="id" />
+      <result column="batch_number" jdbcType="VARCHAR" property="batchNumber" />
+      <result column="date" jdbcType="TIMESTAMP" property="date" />
+      <result column="from" jdbcType="VARCHAR" property="from" />
+      <result column="to" jdbcType="VARCHAR" property="to" />
+      <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+
+    <resultMap id="HistoryOrderMap" type="group.uchain.oilsupplychain.vo.OrdersVO">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="batch_number" jdbcType="VARCHAR" property="batchNumber" />
+        <result column="date" jdbcType="TIMESTAMP" property="date" />
+        <result column="from" jdbcType="VARCHAR" property="from" />
+        <result column="to" jdbcType="VARCHAR" property="to" />
+    </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="group.uchain.oilsupplychain.form.OrderForm">
+    insert into tb_order (id, batch_number, `date`, `from`, `to`, `type`,`status`)
+    values (#{id,jdbcType=VARCHAR}, #{batchNumber,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP},
+      #{from,jdbcType=VARCHAR}, #{to,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="group.uchain.oilsupplychain.form.OrderForm">
+    update tb_order
+    set batch_number = #{batchNumber,jdbcType=VARCHAR},
+      `date` = #{date,jdbcType=TIMESTAMP},
+      `from` = #{from,jdbcType=VARCHAR},
+      `to` = #{to,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, batch_number, `date`, `from`, `to`, `type`
+    from tb_order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, batch_number, `date`, `from`, `to`, `type`
+    from tb_order
+  </select>
+
+    <!--                                                                                                            -->
+    <!--                                       历史订单查询                                                         -->
+    <!--                                                                                                            -->
+
+    <select id="selectApplyForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO"  resultMap="HistoryOrderMap">
+        select id, batch_number, `date`, `from`, `to`,`status`
+        from tb_order
+        where `from` = #{id,jdbcType=VARCHAR}
+        and `type` = '1' order by `date` desc
+    </select>
+    <select id="selectSendForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
+        select id, batch_number, `date`, `from`, `to`
+        from tb_order
+        where `to` = #{id,jdbcType=VARCHAR}
+          and `type` = '2' order by `date` desc
+    </select>
+    <select id="selectTransApplyForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
+        select id, batch_number, `date`, `from`, `to`
+        from tb_order
+        where `from` = #{id,jdbcType=VARCHAR}
+          and `type` = '3' order by `date` desc
+    </select>
+    <select id="selectTransForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
+        select id, batch_number, `date`, `from`, `to`
+        from tb_order
+        where `from` = #{id,jdbcType=VARCHAR}
+          and `type` = '4' order by `date` desc
+    </select>
+    <select id="selectReceiveForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
+        select id, batch_number, `date`, `from`, `to`
+        from tb_order
+        where `from` = #{id,jdbcType=VARCHAR}
+          and `type` = '5' order by `date` desc
+    </select>
+    <select id="selectSellForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
+        select id, batch_number, `date`, `from`, `to`
+        from tb_order
+        where `from` = #{id,jdbcType=VARCHAR}
+          and `type` = '6' order by `date` desc
+    </select>
+
+    <!--                      通过ID获取到批次号                                         -->
+
+    <select id="getBatchNumberById" resultType="java.lang.String">
+        select batch_number
+        from tb_order
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <!--                              获取待审核订单                                    -->
+
+    <select id="getApplyForm" resultType="group.uchain.oilsupplychain.vo.ApplyOrdersVO" resultMap="ApplyOrderMap">
+        SELECT a.id,a.batch_number,a.`date`,a.`status`,b.`username` as `from`,c.`username` as `to` from tb_order as a
+        inner JOIN user as b on a.`from`=b.`id` inner JOIN user as c on a.`to` = c.`id`
+        WHERE a.`to` =#{id,jdbcType=VARCHAR}
+          and `type` = '1'
+          and `status` = '1'
+    </select>
+    <select id="getTransApplyForm" resultType="group.uchain.oilsupplychain.vo.ApplyOrdersVO" resultMap="ApplyOrderMap">
+        SELECT a.id,a.batch_number,a.`date`,a.`status`,b.`username` as `from`,c.`username` as `to` from `tb_order` as a
+        inner JOIN `user` as b on a.`from`=b.`id` inner JOIN trans_company as c on a.`to` = c.`id`
+        WHERE a.`to` =#{id,jdbcType=VARCHAR}
+        and `type` = '3'
+        and `status` = '1'
+    </select>
+
+    <!--                              修改待审核订单状态                                                   -->
+
+    <!--    1.为未审核 2.审核不通过  3.审核通过-->
+
+    <update id="updateApplyFormStatus">
+        update tb_order set
+        `status` = #{param1,jdbcType=VARCHAR}
+        where id = #{param2,jdbcType = VARCHAR}
+    </update>
+</mapper>

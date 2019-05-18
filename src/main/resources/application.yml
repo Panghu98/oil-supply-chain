@@ -1,0 +1,64 @@
+spring:
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_oil?useSSL=false&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: "000411@Dgh"
+  thymeleaf:
+    cache: false
+  mail:
+    host: smtp.qq.com
+    username: 792559738@qq.com
+    password: fmafqfobckggbcia
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+server:
+  port: 8041
+  servlet:
+    session:
+      timeout: 3000ms
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 100
+mybatis:
+  #对应mapper映射xml文件所在的路径
+  mapper-locations: classpath:mapper/*.xml
+  #对应实体类的路径
+  type-aliases-package: group.uchain.oilsupplychain.*
+jwt:
+  secret: swpu-uchain
+  expiration: 1296000
+
+###fabric-config###
+fabric:
+  channel-name: mychannel
+  version: 1.0
+  orderer-domain-name: example.com
+  org-name: Org1
+  org-msp-id: Org1MSP
+  org-domain-name: org1.example.com
+#info:
+#  author: panghu
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        #设置暴露的端点,默认暴露的端点是info和health
+#        include: '*'
+#  endpoint:
+#    health:
+#      enabled: true
+#    beans:
+#      enabled: true

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!-- 导入配置文件 -->
+    <properties resource="application.properties"/>
+
+    <!-- defaultModelType="flat" s设置复合主键时不单独为主键创建实体 -->
+    <context id="MySql" defaultModelType="flat" targetRuntime="MyBatis3Simple">
+
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 当表名或者字段名为SQL关键字的时候，可以设置该属性为true，MBG会自动给表名或字段名添加分隔符(反单引号) -->
+        <property name="autoDelimitKeywords" value="true"/>
+
+        <!-- 由于beginningDelimiter和endingDelimiter的默认值为双引号(")，在Mysql中不能这么写，所以还要将这两个默认值改为反单引号(`)， -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 生成的POJO实现java.io.Serializable接口 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <!--注释-->
+        <commentGenerator>
+            <!-- 阻止生成注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 注释里不添加日期 -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <!-- 数据库连接，直接通过${}读取application.properties里的配置 -->
+        <jdbcConnection
+                driverClass="${spring.datasource.driverClassName}"
+                connectionURL="${spring.datasource.url}"
+                userId="${spring.datasource.username}"
+                password="${spring.datasource.password}"/>
+
+        <!-- 生成POJO对象，并将类放到相关的包下 -->
+        <javaModelGenerator targetPackage="group.uchain.oilsupplychain.form" targetProject="src/main/java"/>
+        <!-- 生成mapper xml文件，并放到resources下的mapper文件夹下 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+        <!-- 生成mapper xml对应dao接口-->
+        <javaClientGenerator targetPackage="group.uchain.oilsupplychain.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <!-- table标签可以有多个，至少一个，tableName指定表名，可以使用_和%通配符，我这里的配置表明匹配所有的表 -->
+        <!--<table tableName="%">-->
+        <table tableName="tb_transport_apply" domainObjectName="Test">
+            <!-- 是否只生成POJO对象 -->
+            <property name="modelOnly" value="false"/>
+            <!-- 插入一条数据时，将id映射到实体类中 -->
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+    </context>
+</generatorConfiguration>

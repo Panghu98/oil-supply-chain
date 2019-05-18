@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.uchain.oilsupplychain.mapper.InfoMapper">
+        <resultMap id="BaseResultMap" type="group.uchain.oilsupplychain.vo.ViewUser">
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="role" javaType="INTEGER" property="role"/>
+        </resultMap>
+    <select id="getAllCompany" resultType="group.uchain.oilsupplychain.vo.ViewUser">
+        select id,username
+        from trans_company
+    </select>
+    <select id="getAllUser" resultType="group.uchain.oilsupplychain.vo.ViewUser">
+        select id,username,`role`
+        from user order by `role`+1;
+    </select>
+</mapper>
