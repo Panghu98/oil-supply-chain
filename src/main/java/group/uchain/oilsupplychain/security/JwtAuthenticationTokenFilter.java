@@ -35,21 +35,21 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         /*
          * 跨域问题的设置
          */
-//        String option = "OPTIONS";
-//        if (option.equals(request.getMethod())) {
-//            log.info("浏览器的预请求的处理..");
-//            response.setContentType("application/json; charset=utf-8");
-//            response.setCharacterEncoding("UTF-8");
-//            response.setHeader("Access-Control-Max-Age", "3600");
-//            response.setHeader("Access-Control-Allow-Methods", "POST, GET,PUT, OPTIONS, DELETE");
-//            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-//            response.setHeader("Access-Control-Allow-Credentials", "true");
-//            response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept, token,Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, X-E4M-With,Authorization,Token");
-//            return;
-//        } else {
-//            String requestURI = request.getRequestURI();
-//            log.info("requestURI:{}", requestURI);
-//        }
+        String option = "OPTIONS";
+        if (option.equals(request.getMethod())) {
+            log.info("浏览器的预请求的处理..");
+            response.setContentType("application/json; charset=utf-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET,PUT, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept, token,Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, X-E4M-With,Authorization,Token");
+            return;
+        } else {
+            String requestURI = request.getRequestURI();
+            log.info("requestURI:{}", requestURI);
+        }
         /*
          * 定义的tokenHeader的名称
          * 在postman中在header中作为参数名
