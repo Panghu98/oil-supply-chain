@@ -67,60 +67,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("");
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {
-
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
-
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
-
-    }
-
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry viewResolverRegistry) {
-
-    }
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> list) {
-
-    }
-
-    @Override
-    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> list) {
-
-    }
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> list) {
-
-    }
-
-    @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> list) {
-
-    }
-
-    @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> list) {
-
-    }
-
-    @Override
-    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> list) {
-
-    }
-
-    @Override
-    public Validator getValidator() {
-        return null;
-    }
 
     @Override
     public MessageCodesResolver getMessageCodesResolver() {
