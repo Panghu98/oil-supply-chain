@@ -49,16 +49,6 @@ public class ActionService {
 
     public Object getApplyDetail(String batchNumber){
         JSONObject jsonObject = FabricMethod.checkRequestOrder(batchNumber);
-        return getObject(jsonObject);
-
-    }
-
-    public Object getTransApplyDetail(String batchNumber){
-        JSONObject jsonObject = FabricMethod.checkOilTransRequestOrder(batchNumber);
-        return getObject(jsonObject);
-    }
-
-    private Object getObject(JSONObject jsonObject) {
         if (!getStatus(jsonObject)){
             JSONObject resultJsonObject = jsonObject.getJSONObject("data");
             Long acceptID = resultJsonObject.getLongValue("acceptid");
@@ -77,7 +67,36 @@ public class ActionService {
         }else{
             return jsonObject;
         }
+
     }
+
+    public Object getTransApplyDetail(String batchNumber){
+        JSONObject jsonObject = FabricMethod.checkOilTransRequestOrder(batchNumber);
+        if (!getStatus(jsonObject)){
+            JSONObject resultJsonObject = jsonObject.getJSONObject("data");
+            Long acceptID = resultJsonObject.getLongValue("acceptid");
+            Long sendID = resultJsonObject.getLongValue("sentid");
+            String type = resultJsonObject.getString("typenumber");
+            Long company = resultJsonObject.getLongValue("transportationfirmid");
+            String companyName = typeChangeService.getNameById(company);
+            String typeName = typeChangeService.getNormalName(type);
+            String acceptName = typeChangeService.getNameById(acceptID);
+            String sendName = typeChangeService .getNameById(sendID);
+            resultJsonObject.put("typeName",typeName);
+            resultJsonObject.put("companyName",companyName);
+            resultJsonObject.put("acceptName",acceptName);
+            resultJsonObject.put("sendName",sendName);
+            resultJsonObject.remove("transportationfirmid");
+            resultJsonObject.remove("typenumber");
+            resultJsonObject.remove("acceptid");
+            resultJsonObject.remove("sentid");
+            return Result.successData(resultJsonObject);
+        }else{
+            return jsonObject;
+        }
+    }
+
+
 
     /*
     上传订单方法  上传到区块链  并且同时保存历史订单到数据库
