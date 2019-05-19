@@ -44,7 +44,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             response.setHeader("Access-Control-Allow-Methods", "POST, GET,PUT, OPTIONS, DELETE");
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Credentials", "true");
-            response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept, token,Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, X-E4M-With,Authorization,Token");
+            response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept, token,Origin, No-Cache, X-Requested-With, If-Modified-Since,authorization,Pragma, Last-Modified, Cache-Control, Expires, Authorization,Token");
             return;
         } else {
             String requestURI = request.getRequestURI();
