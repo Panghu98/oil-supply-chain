@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @CrossOrigin(origins = "*")
 @Api(tags = "数据操作")
-@RequestMapping("/oil/action")
+@RequestMapping("/action")
 @RestController
 @Transactional(rollbackFor = OilException.class)
 public class PublicController {

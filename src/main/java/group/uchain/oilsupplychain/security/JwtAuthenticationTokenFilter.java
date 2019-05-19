@@ -40,7 +40,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             log.info("浏览器的预请求的处理..");
             response.setContentType("application/json; charset=utf-8");
             response.setCharacterEncoding("UTF-8");
-            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Max-Age", "36000");
             response.setHeader("Access-Control-Allow-Methods", "POST, GET,PUT, OPTIONS, DELETE");
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Credentials", "true");

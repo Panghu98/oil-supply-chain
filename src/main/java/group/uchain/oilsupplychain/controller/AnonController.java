@@ -19,7 +19,7 @@ import java.util.Map;
  * @Description: TODO
  * @date 19-3-11 下午2:52
  */
-@RequestMapping("/oil/anon")
+@RequestMapping("/anon")
 @Api(tags = "匿名接口")
 @CrossOrigin
 @RestController
