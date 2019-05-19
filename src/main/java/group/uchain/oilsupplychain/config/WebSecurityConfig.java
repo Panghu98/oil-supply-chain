@@ -85,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/test/**",
                         "/swagger**",
                         "/anon/**",
-                        "/login",
+                        "/oil/login",
                         "/getGoodsTypeList",
                         "/redis/**").permitAll()
                 .anyRequest().authenticated();

@@ -28,7 +28,7 @@ import java.util.List;
  * @date 19-4-4 下午6:30
  */
 @Api(tags = "数据查询")
-@RequestMapping("/info")
+@RequestMapping("/oil/info")
 @CrossOrigin
 @RestController
 public class InfoController {

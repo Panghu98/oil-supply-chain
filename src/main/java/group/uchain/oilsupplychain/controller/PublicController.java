@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @CrossOrigin(origins = "*")
 @Api(tags = "数据操作")
-@RequestMapping("/action")
+@RequestMapping("/oil/action")
 @RestController
 @Transactional(rollbackFor = OilException.class)
 public class PublicController {
@@ -100,7 +100,6 @@ public class PublicController {
     public Object checkRequestOrder(String batchNumber){
         return actionService.getApplyDetail(batchNumber);
     }
-
 
     @ApiOperation(value = "获取系统运输申请订单审核详情")
     @GetMapping("/getTransApplyDetail")
