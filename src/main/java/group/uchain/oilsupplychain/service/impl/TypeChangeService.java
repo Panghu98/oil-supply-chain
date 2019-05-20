@@ -54,13 +54,24 @@ public class TypeChangeService {
             case "diesel":
                 return "柴油";
             case "92":
-                return "#92";
+                return "92号汽油";
             case "95":
-                return "#95";
+                return "95号汽油";
             case "98":
-                return "#98";
+                return "98号汽油";
             default:
                 return "未知类型";
         }
     }
+
+    public String countChange(String count,String unit){
+        Float finalCount = null;
+        if (unit.equals("t")){
+            finalCount = Float.valueOf(count);
+        }else if(unit.equals("L")){
+            finalCount = Float.valueOf(count)/1000;
+        }
+        return String.valueOf(finalCount);
+    }
+
 }

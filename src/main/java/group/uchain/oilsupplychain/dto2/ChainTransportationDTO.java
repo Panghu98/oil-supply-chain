@@ -1,7 +1,9 @@
 package group.uchain.oilsupplychain.dto2;
 
 import group.uchain.oilsupplychain.dto.TransportationDTO;
+import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author panghu
@@ -13,6 +15,8 @@ import lombok.Data;
 @Data
 public class ChainTransportationDTO {
 
+    @Autowired
+    private TypeChangeService typeChangeService;
     /**
      * 油品品号
      */
@@ -52,7 +56,7 @@ public class ChainTransportationDTO {
 
     public ChainTransportationDTO(TransportationDTO transportationDTO,String batchNumber) {
         this.variety = transportationDTO.getVariety();
-        this.count = transportationDTO.getCount();
+        this.count = typeChangeService.countChange(transportationDTO.getCount(),transportationDTO.getUnit());
         this.sender = transportationDTO.getSender();
         this.receiver = transportationDTO.getReceiver();
         this.company = transportationDTO.getCompany();

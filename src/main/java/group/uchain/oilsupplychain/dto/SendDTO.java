@@ -28,6 +28,11 @@ public class SendDTO {
     private String count;
 
     /**
+     * 单位
+     */
+    private String unit;
+
+    /**
      * 抽样检测状态
      */
     private String sampleStatus;

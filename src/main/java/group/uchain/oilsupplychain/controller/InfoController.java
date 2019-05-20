@@ -46,14 +46,14 @@ public class InfoController {
 
     @ApiOperation(value = "获取所有的运输公司")
     @GetMapping("/getAllCompany")
-    public List<ViewUser> getAllCompany(){
-        return infoMapper.getAllCompany();
+    public Result getAllCompany(){
+        return Result.successData(infoMapper.getAllCompany());
     }
 
     @ApiOperation(value = "获取炼油厂,加油站,油库")
     @GetMapping("/getAllUser")
-    public List<ViewUser> getAllUser(){
-        return infoMapper.getAllUser();
+    public Result getAllUser(){
+        return Result.successData(infoMapper.getAllUser());
     }
 
 

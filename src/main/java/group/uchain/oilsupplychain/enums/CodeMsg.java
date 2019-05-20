@@ -13,7 +13,7 @@ import lombok.Getter;
 public enum CodeMsg {
     /***/
     AUTHENTICATION_ERROR(401, "用户认证失败,请重新登录"),
-    PASSWORD_ERROR(402, "密码错误"),
+    ORDER_NOT_EXIST(402, "订单不存在"),
     PERMISSION_DENNY(403, "权限不足"),
     USER_NOT_EXIST(404,"用户不存在"),
     UN_KNOWN_FABRIC_ERROR(500, "Fabric未知错误"),

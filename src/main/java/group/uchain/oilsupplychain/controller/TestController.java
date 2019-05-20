@@ -2,9 +2,12 @@ package group.uchain.oilsupplychain.controller;
 
 import group.uchain.oilsupplychain.annotation.Pass;
 import group.uchain.oilsupplychain.dto2.ChainUserDTO;
+import group.uchain.oilsupplychain.mapper.OrderFormMapper;
 import group.uchain.oilsupplychain.utils.FabricMethod;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +19,14 @@ import springfox.documentation.annotations.ApiIgnore;
  * @projectName oil-supply-chain
  * @date 19-4-11 下午1:00
  */
+@ApiIgnore
 @Api(tags = "测试接口")
 @RestController
 @RequestMapping("/test")
 public class TestController {
+
+    @Autowired
+    private OrderFormMapper orderFormMapper;
 
     @Pass
     @ApiIgnore
@@ -41,4 +48,10 @@ public class TestController {
 
         return res;
     }
+
+    @GetMapping("/checkIdIsExist")
+    public Integer checkIdIsExist(String id){
+        return orderFormMapper.checkIdIsExist(id);
+    }
+
 }

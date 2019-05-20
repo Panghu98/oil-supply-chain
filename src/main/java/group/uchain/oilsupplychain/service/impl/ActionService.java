@@ -3,6 +3,8 @@ package group.uchain.oilsupplychain.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import group.uchain.oilsupplychain.dto.*;
 import group.uchain.oilsupplychain.dto2.*;
+import group.uchain.oilsupplychain.enums.CodeMsg;
+import group.uchain.oilsupplychain.mapper.OrderFormMapper;
 import group.uchain.oilsupplychain.result.Result;
 import group.uchain.oilsupplychain.service.UserService;
 import group.uchain.oilsupplychain.utils.FabricMethod;
@@ -32,15 +34,19 @@ public class ActionService {
 
     private BatchNumberService batchNumberService;
 
+    private OrderFormMapper orderFormMapper;
+
 
 
     @Autowired
     public ActionService(InfoService infoService,TypeChangeService typeChangeService,
-                         BatchNumberService batchNumberService,UserService userService) {
+                         BatchNumberService batchNumberService,UserService userService,
+                         OrderFormMapper orderFormMapper) {
         this.infoService = infoService;
         this.typeChangeService = typeChangeService;
         this.batchNumberService = batchNumberService;
         this.userService = userService;
+        this.orderFormMapper = orderFormMapper;
     }
 
     /**
@@ -118,85 +124,102 @@ public class ActionService {
     }
 
     public Object uploadSendOrder(SendDTO sendDTO, String id){
-        ChainSendDTO chainSendDTO = typeChangeService.getChainSendDTO(sendDTO,id);
-        JSONObject jsonObject = FabricMethod.createSendForm(chainSendDTO);
-        if (!getStatus(jsonObject)){
-            String formId = (String) jsonObject.getJSONObject("data").get("oilhairorderid");
-            infoService.saveSendForm(chainSendDTO,formId);
-            try {
-                FabricMethod.checkOilRequestOrderAndOilHairOrder(batchNumberService.getBatchNumberById(id));
-            } catch (Exception e) {
-                log.error(e.getMessage());
-            }
-            return Result.successData(chainSendDTO.getBatchNumber());
+        if (orderFormMapper.checkIdIsExist(id)==0){
+            return Result.error(CodeMsg.ORDER_NOT_EXIST);
         }else {
-            return jsonObject;
+            ChainSendDTO chainSendDTO = typeChangeService.getChainSendDTO(sendDTO,id);
+
+            JSONObject jsonObject = FabricMethod.createSendForm(chainSendDTO);
+            if (!getStatus(jsonObject)){
+                String formId = (String) jsonObject.getJSONObject("data").get("oilhairorderid");
+                infoService.saveSendForm(chainSendDTO,formId);
+                try {
+                    FabricMethod.checkOilRequestOrderAndOilHairOrder(batchNumberService.getBatchNumberById(id));
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                }
+                return Result.successData(chainSendDTO.getBatchNumber());
+            }else {
+                return jsonObject;
+            }
         }
     }
 
 
 
     public Object uploadTransApplyOrder(TransportationApplyDTO transportationApplyDTO, String id){
-        ChainTransportationApplyDTO applyDTO = typeChangeService.getChainTransportationApplyDTO(transportationApplyDTO,id);
-        JSONObject jsonObject = FabricMethod.createOilTransRequestOrder(applyDTO);
-        if (!getStatus(jsonObject)){
-            String formId = (String) jsonObject.getJSONObject("data").get("oiltransrequestorderid");
-            infoService.saveTransApplyForm(applyDTO,formId);
-            return Result.successData(applyDTO.getBatchNumber());
-        }else  {
-            return jsonObject;
+        if (orderFormMapper.checkIdIsExist(id)==0){
+            return Result.error(CodeMsg.ORDER_NOT_EXIST);
+        }else {
+            ChainTransportationApplyDTO applyDTO = typeChangeService.getChainTransportationApplyDTO(transportationApplyDTO,id);
+            JSONObject jsonObject = FabricMethod.createOilTransRequestOrder(applyDTO);
+            if (!getStatus(jsonObject)){
+                String formId = (String) jsonObject.getJSONObject("data").get("oiltransrequestorderid");
+                infoService.saveTransApplyForm(applyDTO,formId);
+                return Result.successData(applyDTO.getBatchNumber());
+            }else  {
+                return jsonObject;
+            }
         }
 
     }
 
     public Object uploadTransOrder(TransportationDTO transportationDTO, String id){
-        ChainTransportationDTO chainTransportationDTO = typeChangeService.getChainTransportationDTO(transportationDTO,id);
-        JSONObject jsonObject = FabricMethod.creatTransportOrder(chainTransportationDTO);
-        if (!getStatus(jsonObject)){
-            String formId = String.valueOf(jsonObject.getJSONObject("data").get("transportorderid"));
-            infoService.saveTransForm(chainTransportationDTO,formId);
-            try {
-                FabricMethod.checkOilHairOrderAndTransportOrder(batchNumberService.getBatchNumberById(formId));
-            } catch (Exception e) {
-                log.error(e.getMessage());
-            }
-            return Result.successData(chainTransportationDTO.getBatchNumber());
+        if (orderFormMapper.checkIdIsExist(id)==0){
+            return Result.error(CodeMsg.ORDER_NOT_EXIST);
         }else {
-            return jsonObject;
+            ChainTransportationDTO chainTransportationDTO = typeChangeService.getChainTransportationDTO(transportationDTO,id);
+            JSONObject jsonObject = FabricMethod.creatTransportOrder(chainTransportationDTO);
+            if (!getStatus(jsonObject)){
+                String formId = String.valueOf(jsonObject.getJSONObject("data").get("transportorderid"));
+                infoService.saveTransForm(chainTransportationDTO,formId);
+                try {
+                    FabricMethod.checkOilHairOrderAndTransportOrder(batchNumberService.getBatchNumberById(formId));
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                }
+                return Result.successData(chainTransportationDTO.getBatchNumber());
+            }else {
+                return jsonObject;
+            }
         }
     }
 
     public Object uploadReceiveOrder(ReceiveDTO receiveDTO, String id){
-        ChainReceiveDTO chainReceiveDTO = typeChangeService.getChainReceiveDTO(receiveDTO,id);
-        String userID = userService.getCurrentUser().getId();
-        JSONObject jsonObject = FabricMethod.createOilAcceptOrder(chainReceiveDTO,userID);
-        if (!getStatus(jsonObject)){
-            JSONObject checkJson = null;
-            String role = userService.getCurrentUser().getRole();
-            if (role.equals("2")||role.equals("4")){
-                try {
-                    checkJson = FabricMethod.checkAcceptOrderAndOilHairOrder(batchNumberService.getBatchNumberById(id));
-                } catch (Exception e) {
-                    log.error(e.getMessage());
-                }
-            }
-            else if (role.equals("5")){
-                try {
-                    checkJson = FabricMethod.checkAcceptOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
-                } catch (Exception e) {
-                    log.error(e.getMessage());
-                }
-            }
-            String status = String.valueOf(Objects.requireNonNull(checkJson).getJSONObject("status"));
-            if (!status.equals(YES)){
-                return Result.error("信息不一致");
-            }
-            String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
-            infoService.saveReceiveForm(chainReceiveDTO,formId,userID);
-            return Result.success(chainReceiveDTO.getBatchNumber());
-        }else{
-            return jsonObject;
-        }
+       if (orderFormMapper.checkIdIsExist(id)==0){
+           return orderFormMapper.checkIdIsExist(id);
+       }else{
+           ChainReceiveDTO chainReceiveDTO = typeChangeService.getChainReceiveDTO(receiveDTO,id);
+           String userID = userService.getCurrentUser().getId();
+           JSONObject jsonObject = FabricMethod.createOilAcceptOrder(chainReceiveDTO,userID);
+           if (!getStatus(jsonObject)){
+               JSONObject checkJson = null;
+               String role = userService.getCurrentUser().getRole();
+               if (role.equals("2")||role.equals("4")){
+                   try {
+                       checkJson = FabricMethod.checkAcceptOrderAndOilHairOrder(batchNumberService.getBatchNumberById(id));
+                   } catch (Exception e) {
+                       log.error(e.getMessage());
+                   }
+               }
+               else if (role.equals("5")){
+                   try {
+                       checkJson = FabricMethod.checkAcceptOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
+                   } catch (Exception e) {
+                       log.error(e.getMessage());
+                   }
+               }
+               String status = String.valueOf(Objects.requireNonNull(checkJson).getJSONObject("status"));
+               if (!status.equals(YES)){
+                   return Result.error("信息不一致");
+               }
+               String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
+               infoService.saveReceiveForm(chainReceiveDTO,formId,userID);
+               return Result.success(chainReceiveDTO.getBatchNumber());
+           }else{
+               return jsonObject;
+           }
+       }
     }
 
     public Object uploadSellOrder(SellDTO sellDTO){

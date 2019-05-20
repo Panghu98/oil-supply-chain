@@ -1,7 +1,9 @@
 package group.uchain.oilsupplychain.dto2;
 
 import group.uchain.oilsupplychain.dto.SellDTO;
+import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author panghu
@@ -11,6 +13,8 @@ import lombok.Data;
  */
 @Data
 public class ChainSellDTO {
+
+
 
     /**
      * 售油者ID

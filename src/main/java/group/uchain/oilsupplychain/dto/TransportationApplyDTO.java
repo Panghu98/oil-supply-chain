@@ -39,6 +39,11 @@ public class TransportationApplyDTO {
     private String count;
 
     /**
+     * 单位
+     */
+    private String unit;
+
+    /**
      * 配送时间
      */
     String sendTime;

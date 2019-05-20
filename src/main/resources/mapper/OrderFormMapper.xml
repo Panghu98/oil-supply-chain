@@ -125,6 +125,9 @@
         and `type` = '3'
         and `status` = '1'
     </select>
+    <select id="checkIdIsExist" resultType="java.lang.Integer">
+        select count(1) as result from tb_order where `id` = #{id,jdbcType=VARCHAR} limit 1;
+    </select>
 
     <!--                              修改待审核订单状态                                                   -->
 

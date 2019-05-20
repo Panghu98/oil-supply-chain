@@ -2,8 +2,10 @@ package group.uchain.oilsupplychain.dto2;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import group.uchain.oilsupplychain.dto.ApplyDTO;
+import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import group.uchain.oilsupplychain.utils.BatchNumberUtil;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author panghu
@@ -14,6 +16,9 @@ import lombok.Data;
  */
 @Data
 public class ChainApplyDTO {
+
+    @Autowired
+    private TypeChangeService typeChangeService;
 
     /**
      * 油品品号
@@ -49,7 +54,7 @@ public class ChainApplyDTO {
     public ChainApplyDTO(ApplyDTO applyDTO) {
         this.variety = applyDTO.getVariety();
         this.batchNumber = BatchNumberUtil.getCode();
-        this.count = applyDTO.getCount();
+        this.count = typeChangeService.countChange(applyDTO.getCount(),applyDTO.getUnit());
         this.receiver = applyDTO.getReceiver();
         this.sendTime = applyDTO.getSendTime();
         this.sender = applyDTO.getSender();

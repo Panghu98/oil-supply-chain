@@ -1,9 +1,11 @@
 package group.uchain.oilsupplychain.dto2;
 
 import group.uchain.oilsupplychain.dto.SendDTO;
+import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author panghu
@@ -16,6 +18,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChainSendDTO {
+
+    @Autowired
+    private TypeChangeService typeChangeService;
 
     private String batchNumber;
     /**
@@ -49,7 +54,7 @@ public class ChainSendDTO {
 
     public ChainSendDTO(SendDTO sendDTO,String batchNumber) {
         this.variety = sendDTO.getVariety();
-        this.count = sendDTO.getCount();
+        this.count = typeChangeService.countChange(sendDTO.getCount(),sendDTO.getUnit());
         this.sampleStatus = sendDTO.getSampleStatus();
         this.certification = sendDTO.getCertification();
         this.sender = sendDTO.getSender();
