@@ -3,6 +3,7 @@ package group.uchain.oilsupplychain.dto2;
 import group.uchain.oilsupplychain.dto.TransportationDTO;
 import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Description: TODO
  * @date 19-4-3 下午7:17
  */
+@NoArgsConstructor
 @Data
 public class ChainTransportationDTO {
 
@@ -54,13 +56,4 @@ public class ChainTransportationDTO {
 
 
 
-    public ChainTransportationDTO(TransportationDTO transportationDTO,String batchNumber) {
-        this.variety = transportationDTO.getVariety();
-        this.count = typeChangeService.countChange(transportationDTO.getCount(),transportationDTO.getUnit());
-        this.sender = transportationDTO.getSender();
-        this.receiver = transportationDTO.getReceiver();
-        this.company = transportationDTO.getCompany();
-        this.equipmentNumber = transportationDTO.getEquipmentNumber();
-        this.batchNumber = batchNumber;
-    }
 }

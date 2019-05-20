@@ -19,9 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @NoArgsConstructor
 public class ChainSendDTO {
 
-    @Autowired
-    private TypeChangeService typeChangeService;
-
     private String batchNumber;
     /**
      * 油品种类
@@ -52,13 +49,4 @@ public class ChainSendDTO {
 
     private String receiver;
 
-    public ChainSendDTO(SendDTO sendDTO,String batchNumber) {
-        this.variety = sendDTO.getVariety();
-        this.count = typeChangeService.countChange(sendDTO.getCount(),sendDTO.getUnit());
-        this.sampleStatus = sendDTO.getSampleStatus();
-        this.certification = sendDTO.getCertification();
-        this.sender = sendDTO.getSender();
-        this.receiver = sendDTO.getReceiver();
-        this.batchNumber = batchNumber;
-    }
 }

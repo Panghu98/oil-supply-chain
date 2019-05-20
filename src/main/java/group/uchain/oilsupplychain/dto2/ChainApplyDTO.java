@@ -5,6 +5,7 @@ import group.uchain.oilsupplychain.dto.ApplyDTO;
 import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import group.uchain.oilsupplychain.utils.BatchNumberUtil;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -15,10 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 19-4-3 下午7:14
  */
 @Data
+@NoArgsConstructor
 public class ChainApplyDTO {
 
-    @Autowired
-    private TypeChangeService typeChangeService;
 
     /**
      * 油品品号
@@ -51,12 +51,4 @@ public class ChainApplyDTO {
      */
     private String batchNumber;
 
-    public ChainApplyDTO(ApplyDTO applyDTO) {
-        this.variety = applyDTO.getVariety();
-        this.batchNumber = BatchNumberUtil.getCode();
-        this.count = typeChangeService.countChange(applyDTO.getCount(),applyDTO.getUnit());
-        this.receiver = applyDTO.getReceiver();
-        this.sendTime = applyDTO.getSendTime();
-        this.sender = applyDTO.getSender();
-    }
 }

@@ -3,6 +3,7 @@ package group.uchain.oilsupplychain.dto2;
 import group.uchain.oilsupplychain.dto.SellDTO;
 import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 19-4-5 上午8:39
  */
 @Data
+@NoArgsConstructor
 public class ChainSellDTO {
 
 
