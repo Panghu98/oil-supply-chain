@@ -63,7 +63,7 @@ public class TypeChangeService {
         ChainTransportationApplyDTO chainTransportationApplyDTO = new ChainTransportationApplyDTO();
         chainTransportationApplyDTO.setBatchNumber(batchNumberService.getBatchNumberById(id));
         chainTransportationApplyDTO.setCompany(transportationApplyDTO.getCompany());
-        chainTransportationApplyDTO.setCount(countChange(chainTransportationApplyDTO.getCount(),transportationApplyDTO.getUnit()));
+        chainTransportationApplyDTO.setCount(countChange(transportationApplyDTO.getCount(),transportationApplyDTO.getUnit()));
         chainTransportationApplyDTO.setReceiver(transportationApplyDTO.getReceiver());
         chainTransportationApplyDTO.setSender(transportationApplyDTO.getSender());
         chainTransportationApplyDTO.setSendTime(transportationApplyDTO.getSendTime());
@@ -116,13 +116,12 @@ public class TypeChangeService {
     }
 
     public static String countChange(String count,String unit){
-        Float finalCount = null;
+        Double finalCount = null;
         if (unit.equals("t")){
-            finalCount = Float.valueOf(count);
+            finalCount = Double.valueOf(count);
         }else if(unit.equals("L")){
-            finalCount = Float.valueOf(count)/1000;
+            finalCount = Double.valueOf(count)/1000;
         }
-        log.error(String.valueOf(finalCount));
         return String.valueOf(finalCount);
     }
 
