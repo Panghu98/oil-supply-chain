@@ -206,7 +206,7 @@ public class FabricMethod {
      */
     public static JSONObject createSendForm(ChainSendDTO chainSendDTO){
         String[] args = {chainSendDTO.getBatchNumber(),chainSendDTO.getVariety(), chainSendDTO.getCount(),chainSendDTO.getSender(),
-                        chainSendDTO.getSender(),chainSendDTO.getSampleStatus(),chainSendDTO.getCertification()};
+                        chainSendDTO.getReceiver(),chainSendDTO.getSampleStatus(),chainSendDTO.getCertification()};
         JSONObject jsonObject = null;
         try{
             jsonObject = chaincodeManager.invoke("CreateOilHairOrder",args);
@@ -223,10 +223,14 @@ public class FabricMethod {
      * @param batchNumber 统一编号
      * @return
      */
-    public static JSONObject checkOilRequestOrderAndOilHairOrder(String batchNumber) throws Exception {
+    public static JSONObject checkOilRequestOrderAndOilHairOrder(String batchNumber){
         String[] args = {batchNumber};
         JSONObject jsonObject = null;
+        try {
             jsonObject = chaincodeManager.invoke("CheckoilRequestOrderAndOilHairOrder",args);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return getJsonObject(jsonObject);
     }
 
@@ -259,10 +263,14 @@ public class FabricMethod {
      * @param batchNumber 批次号
      * @return
      */
-    public static JSONObject checkOilHairOrderAndTransportOrder(String batchNumber) throws Exception {
+    public static JSONObject checkOilHairOrderAndTransportOrder(String batchNumber){
         String[] args = {batchNumber};
         JSONObject jsonObject = null;
+        try {
             jsonObject = chaincodeManager.invoke("CheckOilHairOrderAndTransportOrder",args);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return getJsonObject(jsonObject);
     }
 
@@ -296,10 +304,14 @@ public class FabricMethod {
      * @param batchNumber 统一编号
      * @return
      */
-    public static JSONObject checkAcceptOrderAndTransportOrder(String batchNumber) throws Exception {
+    public static JSONObject checkAcceptOrderAndTransportOrder(String batchNumber) {
         String[] args = {batchNumber};
         JSONObject jsonObject = null;
+        try {
             jsonObject = chaincodeManager.invoke("CheckAcceptOrderAndTransportOrder",args);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return getJsonObject(jsonObject);
     }
 
@@ -308,10 +320,14 @@ public class FabricMethod {
      * @param batchNumber  统一编号
      * @return
      */
-    public static JSONObject checkAcceptOrderAndOilHairOrder(String batchNumber) throws Exception {
+    public static JSONObject checkAcceptOrderAndOilHairOrder(String batchNumber) {
         String[] args = {batchNumber};
         JSONObject jsonObject = null;
+        try {
             jsonObject = chaincodeManager.invoke("CheckAcceptOrderAndOilHairOrder",args);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return getJsonObject(jsonObject);
 
     }
@@ -410,7 +426,7 @@ public class FabricMethod {
     private static JSONObject getJsonObject(JSONObject jsonObject) {
         String status = Objects.requireNonNull(jsonObject).getString("status");
         JSONObject returnJsonObject = new JSONObject();
-        if (status.equals(SUCCESS)||status.equals("201")){
+        if (status.equals(SUCCESS)){
             returnJsonObject.put("data",jsonObject.getJSONObject("payload"));
         }else {
             String message = String.valueOf(jsonObject.getString("error"));

@@ -223,7 +223,7 @@ public class ChaincodeManager {
         if (failed.size() > 0) {
             ProposalResponse firstTransactionProposalResponse = failed.iterator().next();
             jsonObject.put("error",firstTransactionProposalResponse.getMessage());
-            jsonObject.put("status",firstTransactionProposalResponse.getStatus().getStatus());
+            jsonObject.put("status",firstTransactionProposalResponse.getChaincodeActionResponseStatus());
             log.error(String.valueOf(jsonObject));
             return jsonObject;
         } else {

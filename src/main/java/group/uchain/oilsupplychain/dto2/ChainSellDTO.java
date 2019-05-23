@@ -47,13 +47,4 @@ public class ChainSellDTO {
      */
     private String pay;
 
-
-    public ChainSellDTO(SellDTO sellDTO,String sellerId) {
-        this.capacity = sellDTO.getCapacity();
-        this.univalent = sellDTO.getUnivalent();
-        this.money = sellDTO.getMoney();
-        this.pay = sellDTO.getPay();
-        this.variety = sellDTO.getVariety();
-        this.sellerId = sellerId;
-    }
 }

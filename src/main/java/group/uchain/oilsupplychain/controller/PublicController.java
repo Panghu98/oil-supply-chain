@@ -115,5 +115,4 @@ public class PublicController {
         return infoService.updateApplyFormStatus(id,orderType,status);
     }
 
-
 }

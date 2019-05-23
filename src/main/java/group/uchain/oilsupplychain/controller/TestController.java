@@ -54,4 +54,11 @@ public class TestController {
         return orderFormMapper.checkIdIsExist(id);
     }
 
+    @GetMapping("/checkOilRequestOrderAndOilHairOrder")
+    public Object checkOilRequestOrderAndOilHairOrder(String batchNumber){
+        return FabricMethod.checkOilRequestOrderAndOilHairOrder(batchNumber);
+    }
+
+
+
 }
