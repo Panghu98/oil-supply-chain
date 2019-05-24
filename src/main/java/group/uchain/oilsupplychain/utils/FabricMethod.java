@@ -217,6 +217,7 @@ public class FabricMethod {
 
             log.error(e.getMessage());
         }
+        System.out.println("上传发油单"+jsonObject);
         return getJsonObject(jsonObject);
 
     }
@@ -234,6 +235,7 @@ public class FabricMethod {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+        System.out.println("核验"+jsonObject);
         return getJsonObject(jsonObject);
     }
 
