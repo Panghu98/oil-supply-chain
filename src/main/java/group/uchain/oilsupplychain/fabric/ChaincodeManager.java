@@ -238,8 +238,9 @@ public class ChaincodeManager {
             }
             channel.sendTransaction(successful);
             jsonObject = parseResult(resultAsString);
-            jsonObject.put("message",message);
+            jsonObject.put("Message",message);
             jsonObject.put("status",status);
+            log.info(String.valueOf(jsonObject));
             return jsonObject;
         }
     }

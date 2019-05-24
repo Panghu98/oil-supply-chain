@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -193,7 +194,7 @@ public class ActionService {
             if (getStatus(jsonObject)){
                 String formId = String.valueOf(jsonObject.getJSONObject("data").get("transportorderid"));
                 try {
-                    TimeUnit.SECONDS.sleep(2);
+                    TimeUnit.SECONDS.sleep(3);
                 } catch (InterruptedException e) {
                     log.error(e.getMessage());
                 }
@@ -223,7 +224,7 @@ public class ActionService {
                JSONObject checkJson = null;
                String role = userService.getCurrentUser().getRole();
                try {
-                   TimeUnit.SECONDS.sleep(2);
+                   TimeUnit.SECONDS.sleep(3);
                } catch (InterruptedException e) {
                    log.error(e.getMessage());
                }
@@ -236,15 +237,15 @@ public class ActionService {
                        checkJson = FabricMethod.checkAcceptOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
 
                }
-               assert checkJson != null;
-               if (getStatus(checkJson)){
+               if (getStatus(Objects.requireNonNull(checkJson))){
                    return Result.error(checkJson.getString("message"));
+               }else{
+                   String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
+                   infoService.saveReceiveForm(chainReceiveDTO,formId,userID);
+                   Map<String, String> map = new HashMap<>(2);
+                   map.put("formId",formId);
+                   return Result.successData(map);
                }
-               String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
-               infoService.saveReceiveForm(chainReceiveDTO,formId,userID);
-               Map<String, String> map = new HashMap<>(2);
-               map.put("formId",formId);
-               return Result.successData(map);
            }else{
                return jsonObject;
            }
