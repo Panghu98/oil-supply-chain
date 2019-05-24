@@ -1,5 +1,6 @@
 package group.uchain.oilsupplychain.service.impl;
 
+import ch.qos.logback.core.util.TimeUtil;
 import com.alibaba.fastjson.JSONObject;
 import group.uchain.oilsupplychain.dto.*;
 import group.uchain.oilsupplychain.dto2.*;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author panghu
@@ -113,6 +115,11 @@ public class ActionService {
 
     public Object uploadApplyOrder(ApplyDTO applyDTO){
         ChainApplyDTO chainApplyDTO = typeChangeService.getChainApplyDTO(applyDTO);
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+        }
         JSONObject jsonObject = FabricMethod.createRequestOilOrder(chainApplyDTO);
         //如果获取到data则是成功
         if (getStatus(jsonObject)){
@@ -139,7 +146,7 @@ public class ActionService {
                 String formId = (String) jsonObject.getJSONObject("data").get("oilhairorderid");
                 //核验是否信息一致
                 try {
-                    Thread.sleep(2000);
+                    TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
                     log.error(e.getMessage());
                 }
