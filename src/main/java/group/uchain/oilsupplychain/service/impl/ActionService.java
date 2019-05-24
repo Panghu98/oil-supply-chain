@@ -231,7 +231,7 @@ public class ActionService {
                }
                String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
                infoService.saveReceiveForm(chainReceiveDTO,formId,userID);
-               return Result.success(chainReceiveDTO.getBatchNumber());
+               return Result.successData(chainReceiveDTO.getBatchNumber());
            }else{
                return jsonObject;
            }
@@ -246,7 +246,7 @@ public class ActionService {
             String formId = String.valueOf(jsonObject.getJSONObject("data").get("sellorderid"));
             log.info("返回的订单ID为"+formId);
             infoService.saveSellForm(chainSellDTO,formId);
-            return Result.success("售油订单上传成功");
+            return Result.success();
         }else {
             return jsonObject;
         }

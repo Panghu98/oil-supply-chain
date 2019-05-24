@@ -183,7 +183,7 @@ public class InfoService {
     public Object updateApplyFormStatus(String orderID,String orderType,String status){
         orderFormMapper.updateApplyFormStatus(StatusUtil.getStatus(status),orderID);
         FabricMethod.changeState(orderID,orderType,status);
-        return Result.success("审核信息上传成功");
+        return Result.success();
     }
 
     public Object getTrance(String batchNumber){

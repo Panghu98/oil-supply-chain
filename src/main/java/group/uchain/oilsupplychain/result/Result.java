@@ -11,11 +11,15 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NoArgsConstructor
 public class Result<T> {
     private Integer code;
     private String message;
     private T data;
+
+    public Result() {
+        this.code = 200;
+        this.message = "操作成功";
+    }
 
     public Result(String message) {
         this.code = 500;
@@ -54,8 +58,8 @@ public class Result<T> {
         return new Result<T>(data);
     }
 
-    public static Result success(String message){
-        return new Result(message);
+    public static Result success(){
+        return new Result();
     }
 
     public static <T> Result<T> error(CodeMsg codeMsg){
