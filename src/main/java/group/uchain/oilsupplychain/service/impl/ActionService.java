@@ -115,11 +115,6 @@ public class ActionService {
 
     public Object uploadApplyOrder(ApplyDTO applyDTO){
         ChainApplyDTO chainApplyDTO = typeChangeService.getChainApplyDTO(applyDTO);
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-        }
         JSONObject jsonObject = FabricMethod.createRequestOilOrder(chainApplyDTO);
         //如果获取到data则是成功
         if (getStatus(jsonObject)){
@@ -198,7 +193,7 @@ public class ActionService {
             if (getStatus(jsonObject)){
                 String formId = String.valueOf(jsonObject.getJSONObject("data").get("transportorderid"));
                 try {
-                    Thread.sleep(2000);
+                    TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
                     log.error(e.getMessage());
                 }
@@ -228,7 +223,7 @@ public class ActionService {
                JSONObject checkJson = null;
                String role = userService.getCurrentUser().getRole();
                try {
-                   Thread.sleep(2000);
+                   TimeUnit.SECONDS.sleep(2);
                } catch (InterruptedException e) {
                    log.error(e.getMessage());
                }
