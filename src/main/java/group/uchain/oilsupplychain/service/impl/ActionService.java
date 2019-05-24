@@ -12,7 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author panghu
@@ -117,7 +118,9 @@ public class ActionService {
         if (getStatus(jsonObject)){
             String id = jsonObject.getJSONObject("data").getString("oilrequestorderid");
             infoService.saveApplyForm(chainApplyDTO,id);
-            return Result.successData(id);
+            HashMap<String, String> map = new HashMap<>(2);
+            map.put("formId",id);
+            return Result.successData(map);
         }else{
             return jsonObject;
         }
@@ -144,7 +147,9 @@ public class ActionService {
                 //审核成功  返回结果为真
                 if (getStatus(checkJsonObject)){
                     infoService.saveSendForm(chainSendDTO,formId);
-                    return Result.successData(formId);
+                    Map<String, String> map = new HashMap<>(2);
+                    map.put("formId",formId);
+                    return Result.successData(map);
                 }
                 else {
                     return Result.error(checkJsonObject.getString("message"));
@@ -167,7 +172,9 @@ public class ActionService {
             if (getStatus(jsonObject)){
                 String formId = (String) jsonObject.getJSONObject("data").get("oiltransrequestorderid");
                 infoService.saveTransApplyForm(applyDTO,formId);
-                return Result.successData(formId);
+                HashMap<String, String> hashMap = new HashMap<>(2);
+                hashMap.put("formId",formId);
+                return Result.successData(hashMap);
             }else  {
                 return jsonObject;
             }
@@ -191,7 +198,9 @@ public class ActionService {
                 JSONObject checkJsonObject  = FabricMethod.checkOilHairOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
                 if (getStatus(checkJsonObject)){
                     infoService.saveTransForm(chainTransportationDTO,formId);
-                    return Result.successData(formId);
+                    Map<String, String> map = new HashMap<>(2);
+                    map.put("formId",formId);
+                    return Result.successData(map);
                 }else {
                     return Result.error(checkJsonObject.getString("message"));
                 }
@@ -231,7 +240,9 @@ public class ActionService {
                }
                String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
                infoService.saveReceiveForm(chainReceiveDTO,formId,userID);
-               return Result.successData(formId);
+               Map<String, String> map = new HashMap<>(2);
+               map.put("formId",formId);
+               return Result.successData(map);
            }else{
                return jsonObject;
            }
@@ -246,7 +257,9 @@ public class ActionService {
             String formId = String.valueOf(jsonObject.getJSONObject("data").get("sellorderid"));
             log.info("返回的订单ID为"+formId);
             infoService.saveSellForm(chainSellDTO,formId);
-            return Result.success();
+            Map<String, String> map = new HashMap<>(2);
+            map.put("formId",formId);
+            return Result.successData(map);
         }else {
             return jsonObject;
         }
