@@ -220,7 +220,7 @@ public class ActionService {
            ChainReceiveDTO chainReceiveDTO = typeChangeService.getChainReceiveDTO(receiveDTO,id);
            String userID = userService.getCurrentUser().getId();
            JSONObject jsonObject = FabricMethod.createOilAcceptOrder(chainReceiveDTO,userID);
-           log.info("核验信息"+ jsonObject);
+           log.info("上传信息"+ jsonObject);
            if (getStatus(jsonObject)){
                JSONObject checkJson = null;
                String role = userService.getCurrentUser().getRole();
@@ -239,7 +239,8 @@ public class ActionService {
 
                }
                log.info("核验信息"+ checkJson);
-               if (checkJson.getInteger("code")!=200){
+               //是否成功
+               if (!getStatus(checkJson)){
                    return Result.error(checkJson.getString("message"));
                }else{
                    String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
