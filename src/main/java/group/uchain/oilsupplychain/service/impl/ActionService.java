@@ -142,7 +142,7 @@ public class ActionService {
                 String formId = (String) jsonObject.getJSONObject("data").get("oilhairorderid");
                 //核验是否信息一致
                 try {
-                    TimeUnit.SECONDS.sleep(2);
+                    TimeUnit.SECONDS.sleep(3);
                 } catch (InterruptedException e) {
                     log.error(e.getMessage());
                 }
