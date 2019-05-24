@@ -117,7 +117,7 @@ public class ActionService {
         if (getStatus(jsonObject)){
             String id = jsonObject.getJSONObject("data").getString("oilrequestorderid");
             infoService.saveApplyForm(chainApplyDTO,id);
-            return Result.successData(chainApplyDTO.getBatchNumber());
+            return Result.successData(id);
         }else{
             return jsonObject;
         }
@@ -144,7 +144,7 @@ public class ActionService {
                 //审核成功  返回结果为真
                 if (getStatus(checkJsonObject)){
                     infoService.saveSendForm(chainSendDTO,formId);
-                    return Result.successData(chainSendDTO.getBatchNumber());
+                    return Result.successData(formId);
                 }
                 else {
                     return Result.error(checkJsonObject.getString("message"));
@@ -167,7 +167,7 @@ public class ActionService {
             if (getStatus(jsonObject)){
                 String formId = (String) jsonObject.getJSONObject("data").get("oiltransrequestorderid");
                 infoService.saveTransApplyForm(applyDTO,formId);
-                return Result.successData(applyDTO.getBatchNumber());
+                return Result.successData(formId);
             }else  {
                 return jsonObject;
             }
@@ -191,7 +191,7 @@ public class ActionService {
                 JSONObject checkJsonObject  = FabricMethod.checkOilHairOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
                 if (getStatus(checkJsonObject)){
                     infoService.saveTransForm(chainTransportationDTO,formId);
-                    return Result.successData(chainTransportationDTO.getBatchNumber());
+                    return Result.successData(formId);
                 }else {
                     return Result.error(checkJsonObject.getString("message"));
                 }
@@ -231,7 +231,7 @@ public class ActionService {
                }
                String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
                infoService.saveReceiveForm(chainReceiveDTO,formId,userID);
-               return Result.successData(chainReceiveDTO.getBatchNumber());
+               return Result.successData(formId);
            }else{
                return jsonObject;
            }
