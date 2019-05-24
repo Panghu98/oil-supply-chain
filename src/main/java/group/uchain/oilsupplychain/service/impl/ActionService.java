@@ -24,7 +24,6 @@ import java.util.Objects;
 @Service
 public class ActionService {
 
-    private static final String YES = "YES";
 
     private UserService userService;
 
@@ -57,6 +56,7 @@ public class ActionService {
         JSONObject jsonObject = FabricMethod.checkRequestOrder(batchNumber);
         if (getStatus(jsonObject)){
             JSONObject resultJsonObject = jsonObject.getJSONObject("data");
+            String message = jsonObject.getString("message");
             Long acceptID = resultJsonObject.getLongValue("acceptid");
             Long sendID = resultJsonObject.getLongValue("sentid");
             String type = resultJsonObject.getString("typenumber");
@@ -69,7 +69,7 @@ public class ActionService {
             resultJsonObject.remove("typenumber");
             resultJsonObject.remove("acceptid");
             resultJsonObject.remove("sentid");
-            return Result.successData(resultJsonObject);
+            return Result.dataAndMessage(resultJsonObject,message);
         }else{
             return jsonObject;
         }
@@ -80,6 +80,7 @@ public class ActionService {
         JSONObject jsonObject = FabricMethod.checkOilTransRequestOrder(batchNumber);
         if (getStatus(jsonObject)){
             JSONObject resultJsonObject = jsonObject.getJSONObject("data");
+            String message = jsonObject.getString("message");
             Long acceptID = resultJsonObject.getLongValue("acceptid");
             Long sendID = resultJsonObject.getLongValue("sentid");
             String type = resultJsonObject.getString("typenumber");
@@ -96,7 +97,7 @@ public class ActionService {
             resultJsonObject.remove("typenumber");
             resultJsonObject.remove("acceptid");
             resultJsonObject.remove("sentid");
-            return Result.successData(resultJsonObject);
+            return Result.dataAndMessage(resultJsonObject,message);
         }else{
             return jsonObject;
         }
@@ -134,16 +135,22 @@ public class ActionService {
             if (getStatus(jsonObject)){
                 String formId = (String) jsonObject.getJSONObject("data").get("oilhairorderid");
                 //核验是否信息一致
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    log.error(e.getMessage());
+                }
                 JSONObject checkJsonObject =  FabricMethod.checkOilRequestOrderAndOilHairOrder(batchNumberService.getBatchNumberById(id));
-                //成功为真
+                //审核成功  返回结果为真
                 if (getStatus(checkJsonObject)){
                     infoService.saveSendForm(chainSendDTO,formId);
                     return Result.successData(chainSendDTO.getBatchNumber());
                 }
                 else {
-                    return Result.error(CodeMsg.ORDER_NOT_ACCEPT);
+                    return Result.error(checkJsonObject.getString("message"));
                 }
             }else {
+                //上传失败所返回的相关信息
                 return jsonObject;
             }
         }
@@ -176,12 +183,17 @@ public class ActionService {
             JSONObject jsonObject = FabricMethod.creatTransportOrder(chainTransportationDTO);
             if (getStatus(jsonObject)){
                 String formId = String.valueOf(jsonObject.getJSONObject("data").get("transportorderid"));
-                 JSONObject checkJsonObject  = FabricMethod.checkOilHairOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    log.error(e.getMessage());
+                }
+                JSONObject checkJsonObject  = FabricMethod.checkOilHairOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
                 if (getStatus(checkJsonObject)){
                     infoService.saveTransForm(chainTransportationDTO,formId);
                     return Result.successData(chainTransportationDTO.getBatchNumber());
                 }else {
-                    return Result.error(CodeMsg.ORDER_NOT_ACCEPT);
+                    return Result.error(checkJsonObject.getString("message"));
                 }
             }else {
                 return jsonObject;
@@ -199,16 +211,23 @@ public class ActionService {
            if (getStatus(jsonObject)){
                JSONObject checkJson = null;
                String role = userService.getCurrentUser().getRole();
+               try {
+                   Thread.sleep(2000);
+               } catch (InterruptedException e) {
+                   log.error(e.getMessage());
+               }
+               //获取到的角色油库
                if ("2".equals(role)|| "4".equals(role)){
                        checkJson = FabricMethod.checkAcceptOrderAndOilHairOrder(batchNumberService.getBatchNumberById(id));
                }
+               //获取到的角色是加油站
                else if ("5".equals(role)){
                        checkJson = FabricMethod.checkAcceptOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
 
                }
                assert checkJson != null;
                if (getStatus(checkJson)){
-                   return Result.error(CodeMsg.ORDER_NOT_ACCEPT);
+                   return Result.error(checkJson.getString("message"));
                }
                String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
                infoService.saveReceiveForm(chainReceiveDTO,formId,userID);

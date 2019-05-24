@@ -274,7 +274,7 @@ public class ChaincodeManager {
         queryByChaincodeRequest.setTransientMap(tm2);
 
         long currentStart = System.currentTimeMillis();
-        Collection<ProposalResponse> queryProposalResponses = new ArrayList<>();
+        Collection<ProposalResponse> queryProposalResponses;
         queryProposalResponses = channel.queryByChaincode(queryByChaincodeRequest, channel.getPeers());
         log.info("chaincode queryUser transaction proposal time = " + (System.currentTimeMillis() - currentStart));
         return toPeerResponse(queryProposalResponses, true);

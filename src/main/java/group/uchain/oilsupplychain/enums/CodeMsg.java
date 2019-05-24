@@ -21,7 +21,7 @@ public enum CodeMsg {
     OIlORDER_ALREADY_EXIST(502,"订单已存在"),
     OIlORDER_NOT_EXIST(503,"订单不存在" ),
     BEEN_CHECKED(504,"订单已经审核"),
-    DATABASE_ERROR(505,"数据库异常"),
+    DATABASE_ERROR(505,"请勿重复提交表单"),
     ORDER_NOT_ACCEPT(506,"订单核验未通过");
 
 

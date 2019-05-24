@@ -42,13 +42,6 @@ jwt:
   expiration: 1296000
 
 ###fabric-config###
-fabric:
-  channel-name: mychannel
-  version: 1.0
-  orderer-domain-name: example.com
-  org-name: Org1
-  org-msp-id: Org1MSP
-  org-domain-name: org1.example.com
 #info:
 #  author: panghu
 #management:

@@ -6,7 +6,9 @@ import group.uchain.oilsupplychain.fabric.bean.Chaincode;
 import group.uchain.oilsupplychain.fabric.bean.Orderers;
 import group.uchain.oilsupplychain.fabric.bean.Peers;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.Objects;
 
@@ -18,6 +20,10 @@ import java.util.Objects;
  */
 @Slf4j
 public class FabricManagerMethod {
+
+
+    @Resource()
+
 
     /**
      *     智能合约管理,不止一个对象
@@ -77,7 +83,7 @@ public class FabricManagerMethod {
         config.setOrderers(getOrderers());
         config.setPeers(getPeers());
         if (type==1){
-            config.setChaincode(getChainCode(channelName, "mycc11"
+            config.setChaincode(getChainCode(channelName, "mycc2000"
                     , "github.com/hyperledger/fabric/multipeer/chaincode/go", version));
         }
         //加载通道配置文件

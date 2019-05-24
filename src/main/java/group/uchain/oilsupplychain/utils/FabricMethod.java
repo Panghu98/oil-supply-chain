@@ -18,6 +18,8 @@ public class FabricMethod {
 
     private final static String SUCCESS = "200";
 
+    private final static String SUCCESS_2 = "201";
+
     private final static String ERROR = "error";
 
     static {
@@ -210,6 +212,7 @@ public class FabricMethod {
         JSONObject jsonObject = null;
         try{
             jsonObject = chaincodeManager.invoke("CreateOilHairOrder",args);
+            System.out.println(jsonObject+"-----------------------------------");
         }catch (Exception e){
 
             log.error(e.getMessage());
@@ -426,7 +429,8 @@ public class FabricMethod {
     private static JSONObject getJsonObject(JSONObject jsonObject) {
         String status = Objects.requireNonNull(jsonObject).getString("status");
         JSONObject returnJsonObject = new JSONObject();
-        if (status.equals(SUCCESS)){
+        if (status.equals(SUCCESS)||status.equals(SUCCESS_2)){
+            returnJsonObject.put("message",jsonObject.getString("Message"));
             returnJsonObject.put("data",jsonObject.getJSONObject("payload"));
         }else {
             String message = String.valueOf(jsonObject.getString("error"));

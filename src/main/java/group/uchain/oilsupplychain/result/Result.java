@@ -18,7 +18,7 @@ public class Result<T> {
     private T data;
 
     public Result(String message) {
-        this.code = 200;
+        this.code = 500;
         this.message = message;
     }
 
@@ -36,15 +36,26 @@ public class Result<T> {
         this.message = codeMsg.getMsg();
     }
 
+    private Result(T data, String message) {
+        this.code = 200;
+        this.message = message;
+        this.data = data;
+    }
+
+    public static <T> Result dataAndMessage(T data, String message){
+        if (message  == null){
+            return new Result<>(data, "success");
+        }else {
+            return new Result<>(data, message);
+        }
+    }
+
     public static <T> Result<T> successData(T data){
         return new Result<T>(data);
     }
 
     public static Result success(String message){
         return new Result(message);
-    }
-    public static Result success(){
-        return success(null);
     }
 
     public static <T> Result<T> error(CodeMsg codeMsg){
