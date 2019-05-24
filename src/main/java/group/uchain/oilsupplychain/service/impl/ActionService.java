@@ -237,14 +237,14 @@ public class ActionService {
                        checkJson = FabricMethod.checkAcceptOrderAndTransportOrder(batchNumberService.getBatchNumberById(id));
 
                }
-               if (getStatus(Objects.requireNonNull(checkJson))){
+               if (checkJson.getInteger("code")!=200){
                    return Result.error(checkJson.getString("message"));
                }else{
                    String formId = String.valueOf(jsonObject.getJSONObject("data").get("oilacceptorderid"));
                    infoService.saveReceiveForm(chainReceiveDTO,formId,userID);
                    Map<String, String> map = new HashMap<>(2);
                    map.put("formId",formId);
-                   return Result.successData(map);
+                   return Result.success();
                }
            }else{
                return jsonObject;
