@@ -43,6 +43,7 @@ public class TypeChangeService {
         chainSellDTO.setCapacity(sellDTO.getCapacity());
         chainSellDTO.setMoney(sellDTO.getMoney());
         chainSellDTO.setPay(sellDTO.getPay());
+        chainSellDTO.setUnivalent(sellDTO.getUnivalent());
         chainSellDTO.setSellerId(sellerID);
         chainSellDTO.setVariety(sellDTO.getVariety());
         return chainSellDTO;
