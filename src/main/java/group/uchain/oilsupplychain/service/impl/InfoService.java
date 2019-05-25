@@ -111,7 +111,7 @@ public class InfoService {
         form.setStatus("1");
         form.setBatchNumber(chainReceiveDTO.getBatchNumber());
         form.setFrom(userID);
-        form.setTo("");
+        form.setTo(userID);
         form.setType("5");
         orderFormMapper.insert(form);
     }
@@ -120,7 +120,7 @@ public class InfoService {
         OrderForm form = new OrderForm();
         form.setBatchNumber("");
         form.setDate(format.format(new Date()));
-        form.setTo("");
+        form.setTo("终端用户");
         form.setStatus("1");
         form.setId(id);
         form.setFrom(chainSellDTO.getSellerId());

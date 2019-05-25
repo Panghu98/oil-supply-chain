@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -218,7 +217,8 @@ public class ActionService {
            return orderFormMapper.checkIdIsExist(id);
        }else{
            ChainReceiveDTO chainReceiveDTO = typeChangeService.getChainReceiveDTO(receiveDTO,id);
-           String userID = userService.getCurrentUser().getId();
+           //将收油方更改为表单中的收油方
+           String userID = receiveDTO.getReceiverId();
            JSONObject jsonObject = FabricMethod.createOilAcceptOrder(chainReceiveDTO,userID);
            log.info("上传信息"+ jsonObject);
            if (getStatus(jsonObject)){
