@@ -8,6 +8,7 @@ import group.uchain.oilsupplychain.mapper.OrderFormMapper;
 import group.uchain.oilsupplychain.result.Result;
 import group.uchain.oilsupplychain.service.UserService;
 import group.uchain.oilsupplychain.utils.FabricMethod;
+import group.uchain.oilsupplychain.utils.IDUtil;
 import group.uchain.oilsupplychain.utils.StatusUtil;
 import group.uchain.oilsupplychain.vo.ApplyOrdersVO;
 import group.uchain.oilsupplychain.vo.OrdersVO;
@@ -120,7 +121,7 @@ public class InfoService {
         OrderForm form = new OrderForm();
         form.setBatchNumber("");
         form.setDate(format.format(new Date()));
-        form.setTo("九心海棠");
+        form.setTo("终端用户"+ IDUtil.getRandom());
         form.setStatus("1");
         form.setId(id);
         form.setFrom(chainSellDTO.getSellerId());
