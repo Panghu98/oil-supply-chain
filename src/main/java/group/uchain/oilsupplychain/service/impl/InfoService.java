@@ -120,7 +120,7 @@ public class InfoService {
         OrderForm form = new OrderForm();
         form.setBatchNumber("");
         form.setDate(format.format(new Date()));
-        form.setTo("终端用户");
+        form.setTo("九心海棠");
         form.setStatus("1");
         form.setId(id);
         form.setFrom(chainSellDTO.getSellerId());

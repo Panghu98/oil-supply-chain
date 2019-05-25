@@ -89,7 +89,7 @@
           and a.`type` = '4' order by `date` desc
     </select>
     <select id="selectReceiveForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
-        select a.id as id,a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`, a.`to` as `to`
+        select a.id as id,a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`, b.`username` as `to`
         from tb_order a inner join `user` b on a.`from` = b.id
         where a.`from` = #{id,jdbcType=VARCHAR}
           and `type` = '5' order by `date` desc
