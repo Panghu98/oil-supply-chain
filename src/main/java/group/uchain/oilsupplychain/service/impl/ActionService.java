@@ -218,7 +218,7 @@ public class ActionService {
        }else{
            ChainReceiveDTO chainReceiveDTO = typeChangeService.getChainReceiveDTO(receiveDTO,id);
            //将收油方更改为表单中的收油方
-           String userID = receiveDTO.getReceiverId();
+           String userID = receiveDTO.getReceiver();
            JSONObject jsonObject = FabricMethod.createOilAcceptOrder(chainReceiveDTO,userID);
            log.info("上传信息"+ jsonObject);
            if (getStatus(jsonObject)){

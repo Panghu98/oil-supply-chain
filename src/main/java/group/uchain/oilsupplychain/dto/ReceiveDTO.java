@@ -33,7 +33,7 @@ public class ReceiveDTO {
 
     private String sender;
 
-    private String receiverId;
+    private String receiver;
 
 
 }
