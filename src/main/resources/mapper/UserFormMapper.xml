@@ -23,4 +23,7 @@
         union
         select username from trans_company where `id` = #{id,jdbcType=INTEGER}
     </select>
+    <select id="getRefinery" resultType="java.lang.String">
+            select id from user where  role = '1';
+    </select>
 </mapper>

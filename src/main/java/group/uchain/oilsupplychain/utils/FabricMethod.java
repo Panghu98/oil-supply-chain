@@ -313,7 +313,7 @@ public class FabricMethod {
         String[] args = {batchNumber};
         JSONObject jsonObject = null;
         try {
-            jsonObject = chaincodeManager.invoke("CheckAcceptOrderAndTransportOrder",args);
+            jsonObject = chaincodeManager.invoke("CheckAcceptOrderAndOilRequestOrder",args);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -406,6 +406,17 @@ public class FabricMethod {
             returnJsonObject.put("message",message);
             return returnJsonObject;
         }
+    }
+
+    public static Object addOilReserve(String id,float volume){
+        String[] args = {id, String.valueOf(volume)};
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = chaincodeManager.invoke("AddOilReserve",args);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return jsonObject;
     }
 
 

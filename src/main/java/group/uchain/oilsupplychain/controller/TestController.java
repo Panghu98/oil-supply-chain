@@ -7,6 +7,7 @@ import group.uchain.oilsupplychain.utils.FabricMethod;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,6 +60,18 @@ public class TestController {
         return FabricMethod.checkOilRequestOrderAndOilHairOrder(batchNumber);
     }
 
+    @Pass
+    @ApiOperation(value = "查询剩余储油量")
+    @GetMapping("/queryOilReserve")
+    public Object queryOilReserve(String id){
+        return FabricMethod.queryOilReserve(id);
+    }
+
+
+    @GetMapping("/addOil")
+    public Object addOil(String id,float volume){
+        return FabricMethod.addOilReserve(id,volume);
+    }
 
 
 }

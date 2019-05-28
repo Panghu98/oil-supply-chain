@@ -178,10 +178,4 @@ public class InfoController {
         return infoService.getTrance(batchNumber);
     }
 
-    @Pass
-    @ApiOperation(value = "查询剩余储油量")
-    @GetMapping("/queryOilReserve")
-    public Object queryOilReserve(String id){
-        return FabricMethod.queryOilReserve(id);
-    }
 }
