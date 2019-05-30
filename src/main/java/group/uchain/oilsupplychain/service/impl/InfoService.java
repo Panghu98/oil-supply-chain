@@ -64,24 +64,26 @@ public class InfoService {
     }
 
     public Object getAllCompany(){
-        Object result = redisUtil.lGet(COMPANYLISTKEY,0,redisUtil.lGetListSize(COMPANYLISTKEY));
-        List<ViewUser> list = infoMapper.getAllCompany();
-        if (result==null){
+        List<Object> result = redisUtil.lGet(COMPANYLISTKEY,0,redisUtil.lGetListSize(COMPANYLISTKEY));
+        //缓存中的键值为空
+        if (!redisUtil.hasKey(COMPANYLISTKEY)){
+            List<ViewUser> list = infoMapper.getAllCompany();
             for (ViewUser user:list
-                 ) {
+            ) {
                 redisUtil.lSet(COMPANYLISTKEY,user);
             }
             return list;
         }else{
             log.info("缓存不为空-------------------");
-            return JSON.parseArray(String.valueOf(result));
+            return result;
         }
     }
 
     public Object getAllUser() {
-        Object result = redisUtil.lGet(USERLISTKEY,0,redisUtil.lGetListSize(USERLISTKEY));
-        List<ViewUser> list = infoMapper.getAllUser();
-        if (result==null){
+        List<Object> result = redisUtil.lGet(USERLISTKEY,0,redisUtil.lGetListSize(USERLISTKEY));
+        //缓存中的键值为空
+        if (!redisUtil.hasKey(USERLISTKEY)){
+            List<ViewUser> list = infoMapper.getAllUser();
             for (ViewUser user:list
             ) {
                 redisUtil.lSet(USERLISTKEY,user);
@@ -89,7 +91,7 @@ public class InfoService {
             return list;
         }else{
             log.info("缓存不为空-------------------");
-            return JSON.parseArray(String.valueOf(result));
+            return result;
         }
     }
 
