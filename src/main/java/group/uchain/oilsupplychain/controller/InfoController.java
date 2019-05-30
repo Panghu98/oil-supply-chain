@@ -1,15 +1,12 @@
 package group.uchain.oilsupplychain.controller;
 
-import group.uchain.oilsupplychain.annotation.Pass;
 import group.uchain.oilsupplychain.annotation.RoleRequired;
 import group.uchain.oilsupplychain.enums.RoleEnum;
-import group.uchain.oilsupplychain.mapper.InfoMapper;
 import group.uchain.oilsupplychain.result.Result;
 import group.uchain.oilsupplychain.service.impl.InfoService;
 import group.uchain.oilsupplychain.utils.FabricMethod;
 import group.uchain.oilsupplychain.vo.ApplyOrdersVO;
 import group.uchain.oilsupplychain.vo.OrdersVO;
-import group.uchain.oilsupplychain.vo.ViewUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,27 +30,25 @@ import java.util.List;
 @RestController
 public class InfoController {
 
-    private InfoMapper infoMapper;
-
     private InfoService infoService;
 
     @Autowired
-    public InfoController(InfoMapper infoMapper,InfoService infoService) {
-        this.infoMapper = infoMapper;
+    public InfoController(InfoService infoService) {
         this.infoService = infoService;
     }
+
 
 
     @ApiOperation(value = "获取所有的运输公司")
     @GetMapping("/getAllCompany")
     public Result getAllCompany(){
-        return Result.successData(infoMapper.getAllCompany());
+        return Result.successData(infoService.getAllCompany());
     }
 
     @ApiOperation(value = "获取炼油厂,加油站,油库")
     @GetMapping("/getAllUser")
     public Result getAllUser(){
-        return Result.successData(infoMapper.getAllUser());
+        return Result.successData(infoService.getAllUser());
     }
 
 

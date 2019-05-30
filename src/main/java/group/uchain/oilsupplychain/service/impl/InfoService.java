@@ -1,10 +1,13 @@
 package group.uchain.oilsupplychain.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import group.uchain.oilsupplychain.dto2.*;
 import group.uchain.oilsupplychain.form.OrderForm;
+import group.uchain.oilsupplychain.mapper.InfoMapper;
 import group.uchain.oilsupplychain.mapper.OrderFormMapper;
+import group.uchain.oilsupplychain.redis.RedisUtil;
 import group.uchain.oilsupplychain.result.Result;
 import group.uchain.oilsupplychain.service.UserService;
 import group.uchain.oilsupplychain.utils.FabricMethod;
@@ -12,6 +15,7 @@ import group.uchain.oilsupplychain.utils.IDUtil;
 import group.uchain.oilsupplychain.utils.StatusUtil;
 import group.uchain.oilsupplychain.vo.ApplyOrdersVO;
 import group.uchain.oilsupplychain.vo.OrdersVO;
+import group.uchain.oilsupplychain.vo.ViewUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,19 +38,59 @@ import java.util.TimeZone;
 @Service
 public class InfoService {
 
+    private static final String USERLISTKEY = "users";
+
+    private static final String COMPANYLISTKEY = "company";
+
     private OrderFormMapper orderFormMapper;
 
     private UserService userService;
 
     private TypeChangeService typeChangeService;
 
+    private RedisUtil redisUtil;
+
+    private InfoMapper infoMapper;
 
     @Autowired
-    public InfoService(OrderFormMapper orderFormMapper,
-                       UserService userService,TypeChangeService typeChangeService)  {
+    public InfoService(OrderFormMapper orderFormMapper,InfoMapper infoMapper,
+                       UserService userService,TypeChangeService typeChangeService,
+                       RedisUtil redisUtil)  {
         this.userService = userService;
         this.orderFormMapper = orderFormMapper;
         this.typeChangeService = typeChangeService;
+        this.infoMapper = infoMapper;
+        this.redisUtil = redisUtil;
+    }
+
+    public Object getAllCompany(){
+        Object result = redisUtil.lGet(COMPANYLISTKEY,0,redisUtil.lGetListSize(COMPANYLISTKEY));
+        List<ViewUser> list = infoMapper.getAllCompany();
+        if (result==null){
+            for (ViewUser user:list
+                 ) {
+                redisUtil.lSet(COMPANYLISTKEY,user);
+            }
+            return list;
+        }else{
+            log.info("缓存不为空-------------------");
+            return JSON.parseArray(String.valueOf(result));
+        }
+    }
+
+    public Object getAllUser() {
+        Object result = redisUtil.lGet(USERLISTKEY,0,redisUtil.lGetListSize(USERLISTKEY));
+        List<ViewUser> list = infoMapper.getAllUser();
+        if (result==null){
+            for (ViewUser user:list
+            ) {
+                redisUtil.lSet(USERLISTKEY,user);
+            }
+            return list;
+        }else{
+            log.info("缓存不为空-------------------");
+            return JSON.parseArray(String.valueOf(result));
+        }
     }
 
     private final DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -207,5 +251,6 @@ public class InfoService {
         }
 
     }
+
 
 }
