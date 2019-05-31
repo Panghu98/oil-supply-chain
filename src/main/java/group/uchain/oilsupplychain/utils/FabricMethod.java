@@ -305,7 +305,7 @@ public class FabricMethod {
 
 
     /**
-     * 核验收油单和运输订单数据（油库，运输商，加油站）
+     * 核验收油单和收油订单数据（油库，运输商，加油站）
      * @param batchNumber 统一编号
      * @return
      */
@@ -318,6 +318,7 @@ public class FabricMethod {
             log.error(e.getMessage());
         }
         return getJsonObject(jsonObject);
+
     }
 
     /**
