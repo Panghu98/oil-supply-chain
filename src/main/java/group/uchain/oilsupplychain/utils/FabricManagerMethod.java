@@ -83,7 +83,7 @@ public class FabricManagerMethod {
         config.setOrderers(getOrderers());
         config.setPeers(getPeers());
         if (type==1){
-            config.setChaincode(getChainCode(channelName, "mycc2005"
+            config.setChaincode(getChainCode(channelName, "mycc2007"
                     , "github.com/hyperledger/fabric/multipeer/chaincode/go", version));
         }
         //加载通道配置文件
