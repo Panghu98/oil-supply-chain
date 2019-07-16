@@ -5,10 +5,13 @@
   * 去信任化
   * 数据共享
   * 不可篡改
-   *  不同于不可修改,指发起一笔交易后不能单方面撤销交易,如果需要撤销之前的交易必须再花几笔交易告诉全网我需要撤销之前的交易.
+     *  不同于不可修改,指发起一笔交易后不能单方面撤销交易,如果需要撤销之前的交易必须再花几笔交易告诉全网我需要撤销之前的交易.
 ## 使用的技术栈
 * Mybatis+fabric-sdk+springboot+redis(简单使用)
 
 ## 页面展示
+![登录界面](https://github.com/Panghu98/oil-supply-chain/test/src/main/resources/picture/图片1.png)
+
+![操作界面](https://github.com/Panghu98/oil-supply-chain/test/src/main/resources/picture/图片3.png)
 
 
