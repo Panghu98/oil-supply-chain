@@ -10,8 +10,8 @@
 * Mybatis+fabric-sdk+springboot+redis(简单使用)
 
 ## 页面展示
-![登录界面](https://github.com/Panghu98/oil-supply-chain/test/src/main/resources/picture/图片1.png)
+![登录界面](https://github.com/Panghu98/oil-supply-chain/blob/master/src/main/resources/picture/%E5%9B%BE%E7%89%871.png)
 
-![操作界面](https://github.com/Panghu98/oil-supply-chain/test/src/main/resources/picture/图片3.png)
+![操作界面](https://github.com/Panghu98/oil-supply-chain/blob/master/src/main/resources/picture/%E5%9B%BE%E7%89%873.png)
 
 
