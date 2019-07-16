@@ -223,7 +223,7 @@ public class ChaincodeManager {
         if (failed.size() > 0) {
             ProposalResponse firstTransactionProposalResponse = failed.iterator().next();
             jsonObject.put("error",firstTransactionProposalResponse.getMessage());
-            jsonObject.put("status",firstTransactionProposalResponse.getStatus().getStatus());
+            jsonObject.put("status",firstTransactionProposalResponse.getChaincodeActionResponseStatus());
             log.error(String.valueOf(jsonObject));
             return jsonObject;
         } else {
@@ -238,8 +238,9 @@ public class ChaincodeManager {
             }
             channel.sendTransaction(successful);
             jsonObject = parseResult(resultAsString);
-            jsonObject.put("message",message);
+            jsonObject.put("Message",message);
             jsonObject.put("status",status);
+            log.info(String.valueOf(jsonObject));
             return jsonObject;
         }
     }
@@ -274,7 +275,7 @@ public class ChaincodeManager {
         queryByChaincodeRequest.setTransientMap(tm2);
 
         long currentStart = System.currentTimeMillis();
-        Collection<ProposalResponse> queryProposalResponses = new ArrayList<>();
+        Collection<ProposalResponse> queryProposalResponses;
         queryProposalResponses = channel.queryByChaincode(queryByChaincodeRequest, channel.getPeers());
         log.info("chaincode queryUser transaction proposal time = " + (System.currentTimeMillis() - currentStart));
         return toPeerResponse(queryProposalResponses, true);

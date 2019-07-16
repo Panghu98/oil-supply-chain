@@ -22,6 +22,11 @@ public class TransportationDTO {
      */
     private String count;
 
+    /**
+     * 单位
+     */
+    private String unit;
+
 
     /**
      * 产品发送者

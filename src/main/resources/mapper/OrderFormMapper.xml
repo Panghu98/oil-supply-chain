@@ -89,7 +89,7 @@
           and a.`type` = '4' order by `date` desc
     </select>
     <select id="selectReceiveForms" resultType="group.uchain.oilsupplychain.vo.OrdersVO" resultMap="HistoryOrderMap">
-        select a.id as id,a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`, a.`to` as `to`
+        select a.id as id,a.batch_number as batch_number, a.`date` as `date`, b.`username` as `from`, b.`username` as `to`
         from tb_order a inner join `user` b on a.`from` = b.id
         where a.`from` = #{id,jdbcType=VARCHAR}
           and `type` = '5' order by `date` desc
@@ -124,6 +124,9 @@
         WHERE a.`to` =#{id,jdbcType=VARCHAR}
         and `type` = '3'
         and `status` = '1'
+    </select>
+    <select id="checkIdIsExist" resultType="java.lang.Integer">
+        select count(1) as result from tb_order where `id` = #{id,jdbcType=VARCHAR} limit 1;
     </select>
 
     <!--                              修改待审核订单状态                                                   -->

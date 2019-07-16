@@ -1,6 +1,7 @@
 package group.uchain.oilsupplychain.controller;
 
 import group.uchain.oilsupplychain.exception.OilException;
+import group.uchain.oilsupplychain.result.Result;
 import group.uchain.oilsupplychain.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,7 +40,7 @@ public class AnonController {
             @ApiImplicitParam(name = "password",value = "密码",required = true)
     })
     @PostMapping("/login")
-    public Map login(String username,String password) {
+    public Result login(String username, String password) {
         return loginService.login(username, password);
     }
 

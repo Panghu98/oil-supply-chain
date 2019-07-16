@@ -1,6 +1,8 @@
 package group.uchain.oilsupplychain.service.impl;
 
+import group.uchain.oilsupplychain.enums.CodeMsg;
 import group.uchain.oilsupplychain.mapper.UserFormMapper;
+import group.uchain.oilsupplychain.result.Result;
 import group.uchain.oilsupplychain.security.JwtTokenUtil;
 import group.uchain.oilsupplychain.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,13 +42,10 @@ public class LoginServiceImpl  implements LoginService {
     }
 
     @Override
-    public Map login(String username, String password) {
+    public Result login(String username, String password) {
         if (userFormMapper.selectByUsername(username) == null) {
             log.info("用户不存在");
-            HashMap<String,Object> map = new HashMap<>(10);
-            map.put("status", 0);
-            map.put("msg", "用户不存在");
-            return map;
+            return Result.error(CodeMsg.USER_NOT_EXIST);
         }
 
         log.info("进行验证用户密码..");
@@ -65,7 +64,7 @@ public class LoginServiceImpl  implements LoginService {
         String role = userFormMapper.selectByUsername(username).getRole();
         r.put("role", String.valueOf(role));
 
-        return r;
+        return Result.successData(r);
     }
 
 

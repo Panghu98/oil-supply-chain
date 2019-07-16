@@ -1,7 +1,10 @@
 package group.uchain.oilsupplychain.dto2;
 
 import group.uchain.oilsupplychain.dto.SellDTO;
+import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author panghu
@@ -10,7 +13,10 @@ import lombok.Data;
  * @date 19-4-5 上午8:39
  */
 @Data
+@NoArgsConstructor
 public class ChainSellDTO {
+
+
 
     /**
      * 售油者ID
@@ -41,13 +47,4 @@ public class ChainSellDTO {
      */
     private String pay;
 
-
-    public ChainSellDTO(SellDTO sellDTO,String sellerId) {
-        this.capacity = sellDTO.getCapacity();
-        this.univalent = sellDTO.getUnivalent();
-        this.money = sellDTO.getMoney();
-        this.pay = sellDTO.getPay();
-        this.variety = sellDTO.getVariety();
-        this.sellerId = sellerId;
-    }
 }

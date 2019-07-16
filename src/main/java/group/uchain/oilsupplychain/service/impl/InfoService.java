@@ -1,16 +1,21 @@
 package group.uchain.oilsupplychain.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import group.uchain.oilsupplychain.dto2.*;
 import group.uchain.oilsupplychain.form.OrderForm;
+import group.uchain.oilsupplychain.mapper.InfoMapper;
 import group.uchain.oilsupplychain.mapper.OrderFormMapper;
+import group.uchain.oilsupplychain.redis.RedisUtil;
 import group.uchain.oilsupplychain.result.Result;
 import group.uchain.oilsupplychain.service.UserService;
 import group.uchain.oilsupplychain.utils.FabricMethod;
+import group.uchain.oilsupplychain.utils.IDUtil;
 import group.uchain.oilsupplychain.utils.StatusUtil;
 import group.uchain.oilsupplychain.vo.ApplyOrdersVO;
 import group.uchain.oilsupplychain.vo.OrdersVO;
+import group.uchain.oilsupplychain.vo.ViewUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,19 +38,61 @@ import java.util.TimeZone;
 @Service
 public class InfoService {
 
+    private static final String USERLISTKEY = "users";
+
+    private static final String COMPANYLISTKEY = "company";
+
     private OrderFormMapper orderFormMapper;
 
     private UserService userService;
 
     private TypeChangeService typeChangeService;
 
+    private RedisUtil redisUtil;
+
+    private InfoMapper infoMapper;
 
     @Autowired
-    public InfoService(OrderFormMapper orderFormMapper,
-                       UserService userService,TypeChangeService typeChangeService)  {
+    public InfoService(OrderFormMapper orderFormMapper,InfoMapper infoMapper,
+                       UserService userService,TypeChangeService typeChangeService,
+                       RedisUtil redisUtil)  {
         this.userService = userService;
         this.orderFormMapper = orderFormMapper;
         this.typeChangeService = typeChangeService;
+        this.infoMapper = infoMapper;
+        this.redisUtil = redisUtil;
+    }
+
+    public Object getAllCompany(){
+        List<Object> result = redisUtil.lGet(COMPANYLISTKEY,0,redisUtil.lGetListSize(COMPANYLISTKEY));
+        //缓存中的键值为空
+        if (!redisUtil.hasKey(COMPANYLISTKEY)){
+            List<ViewUser> list = infoMapper.getAllCompany();
+            for (ViewUser user:list
+            ) {
+                redisUtil.lSet(COMPANYLISTKEY,user);
+            }
+            return list;
+        }else{
+            log.info("缓存不为空-------------------");
+            return result;
+        }
+    }
+
+    public Object getAllUser() {
+        List<Object> result = redisUtil.lGet(USERLISTKEY,0,redisUtil.lGetListSize(USERLISTKEY));
+        //缓存中的键值为空
+        if (!redisUtil.hasKey(USERLISTKEY)){
+            List<ViewUser> list = infoMapper.getAllUser();
+            for (ViewUser user:list
+            ) {
+                redisUtil.lSet(USERLISTKEY,user);
+            }
+            return list;
+        }else{
+            log.info("缓存不为空-------------------");
+            return result;
+        }
     }
 
     private final DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -111,7 +158,7 @@ public class InfoService {
         form.setStatus("1");
         form.setBatchNumber(chainReceiveDTO.getBatchNumber());
         form.setFrom(userID);
-        form.setTo("");
+        form.setTo(userID);
         form.setType("5");
         orderFormMapper.insert(form);
     }
@@ -120,7 +167,7 @@ public class InfoService {
         OrderForm form = new OrderForm();
         form.setBatchNumber("");
         form.setDate(format.format(new Date()));
-        form.setTo("");
+        form.setTo("终端用户"+ IDUtil.getRandom());
         form.setStatus("1");
         form.setId(id);
         form.setFrom(chainSellDTO.getSellerId());
@@ -183,7 +230,7 @@ public class InfoService {
     public Object updateApplyFormStatus(String orderID,String orderType,String status){
         orderFormMapper.updateApplyFormStatus(StatusUtil.getStatus(status),orderID);
         FabricMethod.changeState(orderID,orderType,status);
-        return Result.success("审核信息上传成功");
+        return Result.success();
     }
 
     public Object getTrance(String batchNumber){
@@ -206,5 +253,6 @@ public class InfoService {
         }
 
     }
+
 
 }

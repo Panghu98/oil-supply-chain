@@ -1,9 +1,11 @@
 package group.uchain.oilsupplychain.dto2;
 
 import group.uchain.oilsupplychain.dto.SendDTO;
+import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author panghu
@@ -47,13 +49,4 @@ public class ChainSendDTO {
 
     private String receiver;
 
-    public ChainSendDTO(SendDTO sendDTO,String batchNumber) {
-        this.variety = sendDTO.getVariety();
-        this.count = sendDTO.getCount();
-        this.sampleStatus = sendDTO.getSampleStatus();
-        this.certification = sendDTO.getCertification();
-        this.sender = sendDTO.getSender();
-        this.receiver = sendDTO.getReceiver();
-        this.batchNumber = batchNumber;
-    }
 }

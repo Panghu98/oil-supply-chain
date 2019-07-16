@@ -1,5 +1,7 @@
 package group.uchain.oilsupplychain.service;
 
+import group.uchain.oilsupplychain.result.Result;
+
 import java.util.Map;
 
 /**
@@ -15,5 +17,5 @@ public interface LoginService {
      * @param password 密码
      * @return 返回给前端的结果
      */
-    Map login(String username, String password);
+    Result login(String username, String password);
 }

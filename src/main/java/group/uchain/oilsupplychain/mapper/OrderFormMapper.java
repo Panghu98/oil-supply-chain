@@ -52,4 +52,6 @@ public interface OrderFormMapper {
 
     void updateApplyFormStatus(String status, String id);
 
+    int checkIdIsExist(String id);
+
 }

@@ -36,4 +36,6 @@ public class SellDTO {
      */
     private String pay;
 
+
+
 }

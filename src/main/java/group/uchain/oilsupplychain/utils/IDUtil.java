@@ -19,7 +19,7 @@ public class IDUtil {
      * 生成固定长度随机码
      *
      */
-    private static long getRandom() {
+    public static long getRandom() {
         long min = 1, max = 9;
         for (int i = 1; i < (long) 5; i++) {
             min *= 9;
@@ -39,6 +39,7 @@ public class IDUtil {
     private static String randomUUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }
+
 
 
 }

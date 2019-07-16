@@ -2,7 +2,9 @@ package group.uchain.oilsupplychain.dto2;
 
 import group.uchain.oilsupplychain.dto.ReceiveDTO;
 import group.uchain.oilsupplychain.service.UserService;
+import group.uchain.oilsupplychain.service.impl.TypeChangeService;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,12 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Description: TODO
  * @date 19-4-3 下午7:15
  */
+@NoArgsConstructor
 @Data
 public class ChainReceiveDTO {
 
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TypeChangeService typeChangeService;
 
     private String count;
 
@@ -34,12 +40,4 @@ public class ChainReceiveDTO {
 
     private String batchNumber;
 
-    public ChainReceiveDTO(ReceiveDTO receiveDTO,String batchNumber) {
-        this.certification = receiveDTO.getCertification();
-        this.sampleStatus = receiveDTO.getSampleStatus();
-        this.variety = receiveDTO.getVariety();
-        this.senderID = receiveDTO.getSender();
-        this.count = receiveDTO.getCount();
-        this.batchNumber = batchNumber;
-    }
 }

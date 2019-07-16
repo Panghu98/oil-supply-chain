@@ -24,6 +24,11 @@ public class ApplyDTO {
     private String count;
 
     /**
+     * 单位
+     */
+    private String unit;
+
+    /**
      * 发油单位
      */
     private String sender;

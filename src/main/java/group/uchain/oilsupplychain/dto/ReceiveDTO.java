@@ -27,9 +27,13 @@ public class ReceiveDTO {
 
     private String count;
 
+    private String unit;
+
     private String variety;
 
     private String sender;
+
+    private String receiver;
 
 
 }

@@ -19,7 +19,7 @@ public enum RoleEnum {
     PETROL_STATION(5,"加油站"),
     DEOPT_AND_REFINERY(124,"炼油厂和油库"),
     STATION_AND_DEPOT(245,"加油站和油库"),
-    DEPOT_REFINERY_TRANSPORTATION(124,"炼油厂,油库,运输公司");
+    DEPOT_REFINERY_TRANSPORTATION(1234,"炼油厂,油库,运输公司");
 
 
     private Integer role;
