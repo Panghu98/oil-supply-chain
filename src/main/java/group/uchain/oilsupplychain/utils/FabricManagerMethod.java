@@ -60,7 +60,7 @@ public class FabricManagerMethod {
 
     /**
      * 获取节点服务器管理器
-     *
+     *s
      * @return 节点服务器管理器
      */
     public ChaincodeManager getManager(Integer type) {

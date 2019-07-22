@@ -17,6 +17,7 @@ import group.uchain.oilsupplychain.vo.ApplyOrdersVO;
 import group.uchain.oilsupplychain.vo.OrdersVO;
 import group.uchain.oilsupplychain.vo.ViewUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ import java.util.TimeZone;
  */
 @Slf4j
 @Service
-public class InfoService {
+public class InfoService implements InitializingBean {
 
     private static final String USERLISTKEY = "users";
 
@@ -70,7 +71,8 @@ public class InfoService {
             List<ViewUser> list = infoMapper.getAllCompany();
             for (ViewUser user:list
             ) {
-                redisUtil.lSet(COMPANYLISTKEY,user);
+                //设置为一天过期
+                redisUtil.lSet(COMPANYLISTKEY,user,60*60*24);
             }
             return list;
         }else{
@@ -86,7 +88,7 @@ public class InfoService {
             List<ViewUser> list = infoMapper.getAllUser();
             for (ViewUser user:list
             ) {
-                redisUtil.lSet(USERLISTKEY,user);
+                redisUtil.lSet(USERLISTKEY,user,60*60*24);
             }
             return list;
         }else{
@@ -255,4 +257,24 @@ public class InfoService {
     }
 
 
+    /**
+     * 预热缓存
+     * @throws Exception
+     */
+    @Override
+    public void afterPropertiesSet() throws Exception {
+
+        List<ViewUser> list = infoMapper.getAllCompany();
+        for (ViewUser user:list
+        ) {
+            //设置为一天过期
+            redisUtil.lSet(COMPANYLISTKEY,user,60*60*24);
+        }
+
+        List<ViewUser> userList = infoMapper.getAllUser();
+        for (ViewUser user:userList
+        ) {
+            redisUtil.lSet(USERLISTKEY,user,60*60*24);
+        }
+    }
 }
