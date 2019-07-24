@@ -27,7 +27,7 @@ public class ApplyOrdersVO {
     private String to;
 
     /**
-     * 代表的是订单的审核状态
+     * 订单的审核状态
      * 1.未审核 2.审核不通过 3.审核通过
      */
     @JsonIgnore
