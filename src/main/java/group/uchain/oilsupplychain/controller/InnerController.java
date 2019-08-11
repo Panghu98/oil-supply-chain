@@ -68,6 +68,12 @@ public class InnerController {
     }
 
 
+    /**
+     * 增加油量
+     * @param id  储油者ID
+     * @param volume 增加的数量 单位 L
+     * @return
+     */
     @GetMapping("/addOil")
     public Object addOil(String id,float volume){
         return FabricMethod.addOilReserve(id,volume);

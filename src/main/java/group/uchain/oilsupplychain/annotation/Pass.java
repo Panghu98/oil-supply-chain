@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 用户记录接口测试是否成功
  * @author panghu
  * @title: Pass
  * @projectName demo
