@@ -23,8 +23,8 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 @Api(tags = "测试接口")
 @RestController
-@RequestMapping("/test")
-public class TestController {
+@RequestMapping("/inner")
+public class InnerController {
 
     @Autowired
     private OrderFormMapper orderFormMapper;

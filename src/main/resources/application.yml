@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/db_oil?useSSL=false&characterEncoding=utf-8&allowMultiQueries=true
     username: root
-    password: "root"
+    password: "000411"
   thymeleaf:
     cache: false
   mail:

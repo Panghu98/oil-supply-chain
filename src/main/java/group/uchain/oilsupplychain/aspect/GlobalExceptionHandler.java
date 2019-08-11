@@ -4,9 +4,11 @@ import group.uchain.oilsupplychain.enums.CodeMsg;
 import group.uchain.oilsupplychain.exception.OilException;
 import group.uchain.oilsupplychain.result.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 
@@ -25,6 +27,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(OilException.class)
     public Result handleOilException(Exception exception){
+        exception.printStackTrace();
         log.error(EXCEPTION_MSG_KEY+exception.getMessage());
         return Result.error(exception.getMessage());
     }
@@ -32,6 +35,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(SQLException.class)
     public Result<Object> handleSQLException(SQLException exception){
+        exception.printStackTrace();
         log.error(EXCEPTION_MSG_KEY+exception.getMessage());
         return Result.error(CodeMsg.DATABASE_ERROR);
     }

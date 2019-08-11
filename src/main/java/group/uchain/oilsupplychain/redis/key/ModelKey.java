@@ -14,6 +14,6 @@ public class ModelKey extends BasePrefix {
     }
 
     public ModelKey(){
-        super(-1,"oil");
+        super(60*60*12,"oil");
     }
 }

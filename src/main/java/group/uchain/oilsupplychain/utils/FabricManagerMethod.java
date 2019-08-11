@@ -22,9 +22,6 @@ import java.util.Objects;
 public class FabricManagerMethod {
 
 
-    @Resource()
-
-
     /**
      *     智能合约管理,不止一个对象
      */
