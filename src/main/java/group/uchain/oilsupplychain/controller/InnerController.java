@@ -16,7 +16,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author panghu
- * @title: TestController
+ * @title: 内部测试方法接口
  * @projectName oil-supply-chain
  * @date 19-4-11 下午1:00
  */
