@@ -102,9 +102,9 @@ public class FabricManagerMethod {
         //设置根域名和排序服务器对象
         orderer.setOrdererDomainName("example.com");
         //设置orderer节点名称和所在地址
-        //112.74.190.137
+        //47.101.213.60
         //39.108.86.64
-        orderer.addOrderer("orderer.example.com", "grpc://112.74.190.137:7050");
+        orderer.addOrderer("orderer.example.com", "grpc://47.101.213.60:7050");
         return orderer;
     }
 
@@ -123,7 +123,7 @@ public class FabricManagerMethod {
         peers.setOrgDomainName("org1.example.com");
         //节点服务器对象（包含节点名称，节点事件监听名称，节点访问地址，节点事件监听访问地址，CA访问地址）
         peers.addPeer("peer0.org1.example.com", "peer1.org1.example.com",
-                "grpc://112.74.190.137:7051", "grpc://112.74.190.137:7051", "http://112.74.190.137:7054");
+                "grpc://47.101.213.60:7051", "grpc://47.101.213.60:7051", "http://47.101.213.60:7054");
         return peers;
     }
 
