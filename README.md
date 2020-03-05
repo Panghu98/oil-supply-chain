@@ -9,6 +9,29 @@
 ## 使用的技术栈
 * Mybatis+fabric-sdk+springboot+redis
 
+## 运行环境
+OS：centos7
+Web容器：Tomcat
+数据库：Mysql
+		  Couchdb
+开发基础框架：Springboot
+联盟链：fabric
+合约开发：go
+Fabric SDK：
+前端：vue.js + element-ui（模板）+ 阿里的icon-font（图标）
+
+-----
+
+## 系统结构设计及子系统划分
+
+[![3H8L8O.png](https://s2.ax1x.com/2020/03/05/3H8L8O.png)](https://imgchr.com/i/3H8L8O)
+
+
+
+## 系统内部详细划分
+
+[![3HGZrj.png](https://s2.ax1x.com/2020/03/05/3HGZrj.png)](https://imgchr.com/i/3HGZrj)
+
 ## 主要存在的问题
 1.区块链和后端的对接问题
 >后端和区块链进度不一致，区块链网络节点对接不上
@@ -19,5 +42,3 @@
 ![登录界面](https://github.com/Panghu98/oil-supply-chain/blob/master/src/main/resources/picture/%E5%9B%BE%E7%89%871.png)
 
 ![操作界面](https://github.com/Panghu98/oil-supply-chain/blob/master/src/main/resources/picture/%E5%9B%BE%E7%89%873.png)
-
-
